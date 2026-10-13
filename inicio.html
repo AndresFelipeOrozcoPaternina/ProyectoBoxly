@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxly - Inicio</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="pagina-inicio">
+
+    <!-- Menú Lateral Izquierdo -->
+    <aside class="sidebar">
+        <div class="brand">
+            <a href="inicio.html" class="brand-link">
+                <h2>Boxly</h2>
+             </a>
+        </div>
+        <br>
+        <br>
+        <nav class="sidebar-nav">
+            <a href="inicio.html" class="nav-item">
+                <span class="icon">🏠</span> <h3>Inicio</h3>
+            </a>
+            <a href="cajas.html" class="nav-item">
+                <span class="icon">📦</span> <h3>Mis cajas</h3>
+            </a>
+            <a href="facturacion.html" class="nav-item">
+                <span class="icon">📋</span> <h3>Facturación</h3>
+            </a>
+            <a href="bonos.html" class="nav-item">
+                <span class="icon">🎁</span> <h3>Bonos</h3>
+            </a>
+            <a href="configuracion.html" class="nav-item">
+                <span class="icon">⚙️</span> <h3>Configuración</h3>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Área Principal de Contenido -->
+    <div class="main-wrapper">
+        
+        <!-- Barra Superior (Buscador e Iconos) -->
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            
+            <div class="user-actions">
+                <button class="action-btn" title="Notificaciones">🔔</button>
+                <button class="action-btn" title="Carrito">🛒</button>
+                <button class="action-btn profile-btn" title="Perfil" onclick="window.location.href='login.html'">👤</button>
+            </div>
+        </header>
+
+        <!-- Contenido Central -->
+        <main class="content">
+            <section class="hero-section">
+                <h1>¡Explora nuestras cajas de suscripción!</h1>
+                <Strong><p>Encuentra la experiencia mensual, perfecta para ti!</p></strong>
+                
+                <!-- Filtros / Etiquetas -->
+                <div class="tags-container">
+                    <button class="tag active">Todas</button>
+                    <button class="tag">Tecnología</button>
+                    <button class="tag">Fitness</button>
+                    <button class="tag">Gaming</button>
+                    <button class="tag">Cuidado personal</button>
+                </div>
+            </section>
+
+            <!-- Rejilla de Tarjetas / Cajas -->
+            <section class="cards-grid">
+                
+                <!-- Tarjeta 1 -->
+                <article class="card">
+                    <div class="card-image-container">
+                        <!-- DEJA EL SRC VACÍO PARA COLOCAR TU ENLACE LUEGO -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoPr61I1wZ9vVp-bfg2llh6Kd_MOY3qx7Y9vqLg1ZC4A&s=10" alt="Caja gamer ultimate" class="card-img">
+                        <span class="badge-rating">⭐ 4.8</span>
+                        <span class="badge-exclusive">EXCLUSIVE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Caja gamer ultimate</h3>
+                        <div class="card-footer">
+                            <span class="price">135.000 COP/mes</span>
+                            <button class="more-btn">•••</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 2 -->
+                <article class="card">
+                    <div class="card-image-container">
+                        <!-- DEJA EL SRC VACÍO PARA COLOCAR TU ENLACE LUEGO -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqZD1C6DElaUq8b3KQZa9OWRSltXfvpCLpLhW3Bk2Avg&s=10" alt="Fitbox mensual" class="card-img">
+                        <span class="badge-rating">⭐ 4.8</span>
+                        <span class="badge-exclusive">EXCLUSIVE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Fitbox mensual</h3>
+                        <div class="card-footer">
+                            <span class="price">120.000 COP/mes</span>
+                            <button class="more-btn">•••</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 3 -->
+                <article class="card">
+                    <div class="card-image-container">
+                        <!-- DEJA EL SRC VACÍO PARA COLOCAR TU ENLACE LUEGO -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4hlipP6Nzf61W2_VHdRVjMIqjkZiMuyCTW3o67RSCrQ&s=10" alt="Cuidado y bienestar" class="card-img">
+                        <span class="badge-rating">⭐ 4.8</span>
+                        <span class="badge-exclusive">EXCLUSIVE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Cuidado y bienestar</h3>
+                        <div class="card-footer">
+                            <span class="price">120.000 COP/mes</span>
+                            <button class="more-btn">•••</button>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

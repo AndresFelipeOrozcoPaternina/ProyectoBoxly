@@ -1,0 +1,422 @@
+/* ==========================================
+   ESTILOS GENERALES (Aplica a todo el sitio)
+   ========================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    background-color: #f4f5f7;
+}
+
+
+/* 
+   ESTILOS EXCLUSIVOS DE LA PÁGINA DE LOGIN
+   (.pagina-login)
+    */
+
+body.pagina-login {
+    text-align: center;
+}
+
+/* Encabezado completo con fondo morado oscuro */
+.pagina-login header {
+    background-color: #4B0082; /* Morado oscuro */
+    color: #ffffff;
+    padding: 30px 20px;
+}
+
+/* Título dentro del encabezado morado */
+.pagina-login header h1 {
+    color: #ffffff;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+/* Enlace de navegación en el encabezado */
+.pagina-login nav a {
+    color: #e0d4f7;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.pagina-login nav a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Ocultar o ajustar la línea horizontal si no es necesaria con el nuevo fondo */
+.pagina-login hr {
+    display: none; 
+}
+
+/* Subtítulo "Acceso" */
+.pagina-login main h2 {
+    color: #311B92;
+    margin: 30px 0 20px 0;
+    font-size: 1.8rem;
+}
+
+/* Tarjeta del formulario (Más grande y centrada) */
+.pagina-login form {
+    display: inline-block;
+    text-align: left;
+    background-color: #ffffff;
+    padding: 40px 45px;          /* Más relleno interno */
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* Sombra más suave y definida */
+    width: 90%;
+    max-width: 480px;            /* Tarjeta más ancha */
+    margin-bottom: 40px;
+}
+
+/* Etiquetas del formulario */
+.pagina-login label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #444444;
+}
+
+/* Campos de texto más grandes e intuitivos */
+.pagina-login input[type="text"],
+.pagina-login input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;          /* Mayor espacio para escribir */
+    margin-top: 8px;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.pagina-login input[type="text"]:focus,
+.pagina-login input[type="password"]:focus {
+    border-color: #4B0082;       /* Borde morado al hacer clic */
+}
+
+/* Botón de ingresar más amplio y llamativo */
+.pagina-login button {
+    background-color: #4B0082;
+    color: #ffffff;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.pagina-login button:hover {
+    background-color: #311B92;
+}
+
+.pagina-login button:active {
+    transform: scale(0.98);      
+}
+
+/* ==========================================
+   ESTILOS EXCLUSIVOS DE LA PÁGINA DE INICIO
+   (.pagina-inicio)
+   ========================================== */
+
+body.pagina-inicio {
+    display: flex;
+    min-height: 100vh;
+    background-color: #e9ecef;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Sidebar lateral azul/morado */
+.pagina-inicio .sidebar {
+    width: 240px;
+    background-color: #5c54ec;
+    color: #ffffff;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+/* Quita el azul y el subrayado del enlace Boxly */
+.pagina-inicio .brand-link {
+    text-decoration: none !important; /* Elimina la línea azul de abajo */
+    color: inherit;                   /* Mantiene el color blanco original */
+    display: inline-block;
+}
+
+/* Fuerza a que el h2 dentro del enlace sea blanco */
+.pagina-inicio .brand-link h2 {
+    color: #ffffff !important;
+    font-size: 2.2rem;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+}
+
+/* Mantiene el texto "tag" suave */
+.pagina-inicio .brand-link span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+}
+
+/* Navegación sidebar */
+.pagina-inicio .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pagina-inicio .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    transition: background-color 0.2s;
+}
+
+.pagina-inicio .nav-item:hover,
+.pagina-inicio .nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Área de contenido general */
+.pagina-inicio .main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Topbar superior */
+.pagina-inicio .topbar {
+    background-color: #ffffff;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.pagina-inicio .search-box {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6px 14px;
+    width: 320px;
+}
+
+.pagina-inicio .search-box input {
+    border: none;
+    outline: none;
+    margin-left: 8px;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.pagina-inicio .user-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.pagina-inicio .action-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+/* Contenido Principal */
+.pagina-inicio .content {
+    padding: 30px 40px;
+}
+
+.pagina-inicio .hero-section {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.pagina-inicio .hero-section h1 {
+    font-size: 2.2rem;
+    color: #111111;
+    margin-bottom: 8px;
+}
+
+.pagina-inicio .hero-section p {
+    color: #555555;
+    margin-bottom: 20px;
+}
+
+/* Filtros / Etiquetas */
+.pagina-inicio .tags-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pagina-inicio .tag {
+    border: none;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.pagina-inicio .tag.active {
+    background-color: #7b73f6;
+    color: #ffffff;
+}
+
+/* Rejilla de Tarjetas */
+.pagina-inicio .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.pagina-inicio .card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Área reservada para imágenes */
+.pagina-inicio .card-image-container {
+    position: relative;
+    width: 100%;
+    height: 220px; /* Tamaño fijo definido para la imagen */
+    background-color: #e2e8f0; /* Fondo gris placeholder por si no hay imagen */
+}
+
+.pagina-inicio .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Etiquetas flotantes sobre la imagen */
+.pagina-inicio .badge-rating {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background-color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.pagina-inicio .badge-exclusive {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Cuerpo de la tarjeta */
+.pagina-inicio .card-body {
+    padding: 20px;
+}
+
+.pagina-inicio .card-body h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #111111;
+}
+
+.pagina-inicio .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagina-inicio .price {
+    font-weight: bold;
+    color: #333333;
+    font-size: 0.95rem;
+}
+
+.pagina-inicio .more-btn {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 1. Volver todos los iconos negros */
+.pagina-inicio .nav-item .icon {
+    filter: brightness(0); /* Convierte los emojis/iconos en siluetas negras */
+    font-size: 1.2rem;
+}
+
+/* 2. Quitar márgenes por defecto de los h3 dentro del menú */
+.pagina-inicio .nav-item h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #ffffff; /* Mantiene el texto en blanco */
+}
+
+/* 3. Asegurar alineación centrar de icono y texto */
+.pagina-inicio .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+
+/* Icono del buscador en gris claro */
+.pagina-inicio .search-box .search-icon {
+    filter: brightness(0) opacity(0.5); /* Convierte el icono a un tono gris medio/claro */
+    font-size: 1.1rem;
+}
+
+/* Iconos de la esquina superior derecha (notificaciones, carrito y perfil) en gris claro */
+.pagina-inicio .user-actions .action-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    filter: brightness(0) opacity(0.5); /* Los vuelve grises */
+    transition: filter 0.2s ease;
+}
+
+/* Efecto al pasar el cursor sobre los iconos superiores para que resalten */
+.pagina-inicio .user-actions .action-btn:hover {
+    filter: brightness(0) opacity(0.8);
+}
