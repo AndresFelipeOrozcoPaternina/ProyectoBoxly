@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxly - Mis Cajas</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="pagina-cajas">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <a href="inicio.html" class="brand-link">
+                <h2>Boxly</h2>
+            </a>
+        </div>
+        <br>
+        <br>
+        <nav class="sidebar-nav">
+            <a href="inicio.html" class="nav-item">
+                <span class="icon">🏠</span> <h3>Inicio</h3>
+            </a>
+            <a href="cajas.html" class="nav-item active">
+                <span class="icon">📦</span> <h3>Mis cajas</h3>
+            </a>
+            <a href="facturacion.html" class="nav-item">
+                <span class="icon">📋</span> <h3>Facturación</h3>
+            </a>
+            <a href="bonos.html" class="nav-item">
+                <span class="icon">🎁</span> <h3>Bonos</h3>
+            </a>
+            <a href="configuracion.html" class="nav-item">
+                <span class="icon">⚙️</span> <h3>Configuración</h3>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar...">
+            </div>
+
+            <div class="user-actions">
+                <button class="action-btn" title="Notificaciones">🔔</button>
+                <button class="action-btn" title="Carrito">🛒</button>
+                <button class="action-btn profile-btn" title="Perfil" onclick="window.location.href='login.html'">👤</button>
+            </div>
+        </header>
+
+        <main class="content subscriptions-content">
+            <section class="welcome-header">
+                <p class="welcome-text">¡Hola de nuevo, Jose! 👋</p>
+                <h1>Mis suscripciones activas</h1>
+            </section>
+
+            <section class="filter-bar" aria-label="Filtros de suscripciones">
+                <button class="filter-pill active" data-status="all" onclick="window.applySubscriptionFilter('all')">Todas <span>(5)</span></button>
+                <button class="filter-pill" data-status="active" onclick="window.applySubscriptionFilter('active')">Activas <span>(2)</span></button>
+                <button class="filter-pill" data-status="upcoming" onclick="window.applySubscriptionFilter('upcoming')">Próximamente <span>(2)</span></button>
+                <button class="filter-pill" data-status="inactive" onclick="window.applySubscriptionFilter('inactive')">Inactivas <span>(1)</span></button>
+            </section>
+
+            <section class="cards-grid subscriptions-grid">
+                <article class="card subscription-card" data-status="active" data-title="Cuidado personal" data-description="Incluye productos de higiene, cuidado personal y bienestar para mantener una rutina completa cada mes con artículos premium y útiles de uso diario." data-price="120.000 COP / mes">
+                    <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+                    <div class="card-image-container">
+                        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" alt="Cuidado personal" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3>Cuidado personal</h3>
+                        <div class="card-meta">
+                            <span class="status active">Activo</span>
+                            <span class="price">120.000 COP</span>
+                        </div>
+                        <button class="details-btn" type="button">Ver detalles</button>
+                    </div>
+                </article>
+
+                <article class="card subscription-card" data-status="active" data-title="Videojuegos" data-description="Box de entretenimiento con acceso a productos del universo gamer, accesorios, merchandising y artículos que te ayudarán a vivir la experiencia completa de cada lanzamiento." data-price="135.000 COP / mes">
+                    <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+                    <div class="card-image-container">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" alt="Videojuegos" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3>Videojuegos</h3>
+                        <div class="card-meta">
+                            <span class="status active">Activo</span>
+                            <span class="price">135.000 COP</span>
+                        </div>
+                        <button class="details-btn" type="button">Ver detalles</button>
+                    </div>
+                </article>
+
+                <article class="card subscription-card" data-status="upcoming" data-title="Implementos gym" data-description="Kit mensual con accesorios deportivos, resistencia y elementos para entrenar en casa o en el gimnasio con mayor comodidad, seguridad y variedad." data-price="150.000 COP / mes">
+                    <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+                    <div class="card-image-container">
+                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Implementos gym" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3>Implementos gym</h3>
+                        <div class="card-meta">
+                            <span class="status upcoming">Próximo</span>
+                            <span class="price">150.000 COP</span>
+                        </div>
+                        <button class="details-btn" type="button">Ver detalles</button>
+                    </div>
+                </article>
+
+                <article class="card subscription-card" data-status="inactive" data-title="Herramientas" data-description="Incluye herramientas, accesorios y elementos de trabajo para proyectos del hogar, mantenimiento y tareas del día a día con calidad y utilidad constante." data-price="110.000 COP / mes">
+                    <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+                    <div class="card-image-container">
+                        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=80" alt="Herramientas" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3>Herramientas</h3>
+                        <div class="card-meta">
+                            <span class="status inactive">Inactiva</span>
+                            <span class="price">110.000 COP</span>
+                        </div>
+                        <button class="details-btn" type="button">Ver detalles</button>
+                    </div>
+                </article>
+
+                <article class="card subscription-card" data-status="active" data-title="Tecnología" data-description="Suscripción con gadgets, accesorios y productos tecnológicos para potenciar tu espacio digital y mantenerte al día con cada lanzamiento del mundo tech." data-price="200.000 COP / mes">
+                    <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+                    <div class="card-image-container">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" alt="Tecnología" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3>Tecnología</h3>
+                        <div class="card-meta">
+                            <span class="status active">Activo</span>
+                            <span class="price">200.000 COP</span>
+                        </div>
+                        <button class="details-btn" type="button">Ver detalles</button>
+                    </div>
+                </article>
+
+                <article class="card subscription-card" data-status="upcoming" data-title="Bienestar y spa" data-description="Caja de relajación con esenciales de spa, productos de autocuidado y artículos para mejorar tu bienestar y rutina de descanso." data-price="130.000 COP / mes">
+                    <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+                    <div class="card-image-container">
+                        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80" alt="Bienestar y spa" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3>Bienestar y spa</h3>
+                        <div class="card-meta">
+                            <span class="status upcoming">Próximo</span>
+                            <span class="price">130.000 COP</span>
+                        </div>
+                        <button class="details-btn" type="button">Ver detalles</button>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal-overlay hidden" id="subscriptionModal" aria-hidden="true">
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="close-modal" type="button" aria-label="Cerrar modal">×</button>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="Detalle de la caja">
+            </div>
+            <div class="modal-content">
+                <p class="modal-label">Detalle de la suscripción</p>
+                <h2 id="modalTitle">Caja</h2>
+                <p id="modalDescription"></p>
+                <div class="modal-price-row">
+                    <span>Precio</span>
+                    <strong id="modalPrice"></strong>
+                </div>
+                <button class="cancel-btn" type="button">Cancelar suscripción</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
