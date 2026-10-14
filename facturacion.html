@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxly - Prefacturación</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="app-shell pagina-facturacion">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <a href="inicio.html" class="brand-link">
+                <h2>Boxly</h2>
+            </a>
+        </div>
+        <br>
+        <br>
+        <nav class="sidebar-nav">
+            <a href="inicio.html" class="nav-item">
+                <span class="icon">🏠</span> <h3>Inicio</h3>
+            </a>
+            <a href="cajas.html" class="nav-item">
+                <span class="icon">📦</span> <h3>Mis cajas</h3>
+            </a>
+            <a href="facturacion.html" class="nav-item active">
+                <span class="icon">📋</span> <h3>Facturación</h3>
+            </a>
+            <a href="bonos.html" class="nav-item">
+                <span class="icon">🎁</span> <h3>Bonos</h3>
+            </a>
+            <a href="configuracion.html" class="nav-item">
+                <span class="icon">⚙️</span> <h3>Configuración</h3>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar...">
+            </div>
+
+            <div class="user-actions">
+                <button class="action-btn" title="Notificaciones">🔔</button>
+                <button class="action-btn" title="Carrito">🛒</button>
+                <button class="action-btn profile-btn" title="Perfil" onclick="window.location.href='login.html'">👤</button>
+            </div>
+        </header>
+
+        <main class="content">
+            <a href="inicio.html" class="back-link">← Seguir explorando el catálogo</a>
+
+            <div class="facturacion-intro">
+                <h1>Prefacturación</h1>
+                <p>Revisa los datos de tu suscripción y confirma tu pre-factura para activar la caja.</p>
+            </div>
+
+            <section class="facturacion-layout">
+                <form id="formFacturacion" novalidate>
+                    <div class="seccion-card">
+                        <h2>Dirección de envío</h2>
+
+                        <div class="campo">
+                            <label for="destinatario">Nombre del destinatario</label>
+                            <input type="text" id="destinatario" name="destinatario" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="direccion">Dirección completa</label>
+                            <input type="text" id="direccion" name="direccion" placeholder="Calle, número, apartamento, barrio" required>
+                        </div>
+
+                        <div class="campo-row">
+                            <div class="campo">
+                                <label for="ciudad">Ciudad</label>
+                                <input type="text" id="ciudad" name="ciudad" required>
+                            </div>
+                            <div class="campo">
+                                <label for="telefono">Teléfono de contacto</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seccion-card">
+                        <h2>Método de pago</h2>
+
+                        <div class="metodo-pago-list">
+                            <label class="metodo-pago">
+                                <input type="radio" name="metodoPago" value="transferencia" checked>
+                                <span>
+                                    <strong>Transferencia bancaria</strong>
+                                    <span>Recibirás la pre-factura por correo y confirmarás el pago de forma manual antes del despacho.</span>
+                                </span>
+                            </label>
+
+                            <label class="metodo-pago">
+                                <input type="radio" name="metodoPago" value="contra-entrega">
+                                <span>
+                                    <strong>Pago contra entrega</strong>
+                                    <span>Pagas al recibir tu caja en la dirección registrada.</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" type="submit">Confirmar pre-factura</button>
+                </form>
+
+                <aside class="resumen-card">
+                    <div class="resumen-caja">
+                        <img id="factCajaImagen" src="" alt="Caja seleccionada">
+                        <div>
+                            <h3 id="factCajaNombre">Caja</h3>
+                            <p id="factPlanNombre">Plan</p>
+                        </div>
+                    </div>
+
+                    <div class="resumen-row">
+                        <span>Valor del plan</span>
+                        <strong id="factValorPlan">—</strong>
+                    </div>
+
+                    <div class="resumen-row" id="factFilaAhorro" style="display: none;">
+                        <span>Ahorro por descuento</span>
+                        <strong id="factAhorroPlan">—</strong>
+                    </div>
+
+                    <div class="resumen-row">
+                        <span>Costo de envío</span>
+                        <strong id="factEnvio">—</strong>
+                    </div>
+
+                    <div class="resumen-total">
+                        <span>Total a pagar</span>
+                        <span id="factTotal">—</span>
+                    </div>
+
+                    <p class="nota-rn">
+                        Al confirmar se genera tu pre-factura con el valor del plan, el costo de envío y el total.
+                        La suscripción se activará cuando el pago sea registrado y validado (RN-03 y RN-04).
+                    </p>
+                </aside>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
