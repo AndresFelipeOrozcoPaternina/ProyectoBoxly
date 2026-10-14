@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxly - Configuración</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="app-shell pagina-configuracion">
+
+    <!-- Menú Lateral -->
+    <aside class="sidebar">
+        <div class="brand">
+            <a href="inicio.html" class="brand-link">
+                <h2>Boxly</h2>
+            </a>
+        </div>
+        <br><br>
+        <nav class="sidebar-nav">
+            <a href="inicio.html" class="nav-item">
+                <span class="icon">🏠</span> <h3>Inicio</h3>
+            </a>
+            <a href="cajas.html" class="nav-item">
+                <span class="icon">📦</span> <h3>Mis cajas</h3>
+            </a>
+            <a href="facturacion.html" class="nav-item">
+                <span class="icon">📋</span> <h3>Facturación</h3>
+            </a>
+            <a href="bonos.html" class="nav-item">
+                <span class="icon">🎁</span> <h3>Bonos</h3>
+            </a>
+            <a href="configuracion.html" class="nav-item active">
+                <span class="icon">⚙️</span> <h3>Configuración</h3>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Área Principal -->
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            <div class="user-actions">
+                <button class="action-btn" title="Notificaciones">🔔</button>
+                <button class="action-btn" title="Carrito">🛒</button>
+                <button class="action-btn profile-btn" title="Perfil" onclick="window.location.href='login.html'">👤</button>
+            </div>
+        </header>
+
+        <main class="content">
+            <h1>Configuración de la Cuenta</h1>
+            <p>Gestiona tu información personal, preferencias y visualiza métricas de tu cuenta.</p>
+
+            <div class="config-grid">
+                
+                <!-- Datos Personales (RF-03) -->
+                <article class="config-card">
+                    <h2>Datos Personales</h2>
+                    <form onsubmit="event.preventDefault(); alert('Datos actualizados correctamente');">
+                        <div>
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" id="nombre" value="Jose Manuel Pulgarin" required>
+                        </div>
+                        <br>
+                        <div>
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" value="jose@ejemplo.com" required>
+                        </div>
+                        <br>
+                        <div>
+                            <label for="telefono">Teléfono</label>
+                            <input type="text" id="telefono" value="3001234567">
+                        </div>
+                        <br>
+                        <button type="submit">Actualizar Datos</button>
+                    </form>
+                </article>
+
+                <!-- Preferencias (RF-04) -->
+                <article class="config-card">
+                    <h2>Mis Preferencias</h2>
+                    <p>Selecciona tus intereses para personalizar tus cajas:</p>
+                    <form onsubmit="event.preventDefault(); alert('Preferencias guardadas');">
+                        <div>
+                            <label><input type="checkbox" checked> Tecnología y Gadgets</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" checked> Gaming</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox"> Cuidado personal</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox"> Fitness y Salud</label>
+                        </div>
+                        <br>
+                        <button type="submit">Guardar Preferencias</button>
+                    </form>
+                </article>
+
+                <!-- Estadísticas de Cuenta -->
+                <article class="config-card">
+                    <h2>Mis Estadísticas</h2>
+                    <div class="stat-item">
+                        <span>Cajas recibidas:</span>
+                        <strong>15</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Suscripciones activas:</span>
+                        <strong>4</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Puntos acumulados:</span>
+                        <strong>350 pts</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Categoría favorita:</span>
+                        <strong>Gaming</strong>
+                    </div>
+                </article>
+
+                <!-- Seguridad y Cierre de Sesión -->
+                <article class="config-card">
+                    <h2>Seguridad de la Cuenta</h2>
+                    <form onsubmit="event.preventDefault(); alert('Contraseña cambiada');">
+                        <div>
+                            <label for="password">Nueva contraseña</label>
+                            <input type="password" id="password" placeholder="********">
+                        </div>
+                        <br>
+                        <button type="submit">Cambiar Contraseña</button>
+                    </form>
+                    
+                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
+                    
+                    <!-- Llama a la función global declarada en script.js -->
+                    <button type="button" class="btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
+                </article>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,3 +1,111 @@
+const CATALOGO = {
+    'gamer-ultimate': {
+        nombre: 'Caja gamer ultimate',
+        categoria: 'Gaming',
+        precioMensual: 135000,
+        rating: '4.8',
+        imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoPr61I1wZ9vVp-bfg2llh6Kd_MOY3qx7Y9vqLg1ZC4A&s=10',
+        descripcion: 'La caja definitiva para amantes del gaming: accesorios, merchandising y snacks seleccionados cada mes para vivir la experiencia completa de tus lanzamientos favoritos.',
+        inclusiones: [
+            'Mousepad XL de edición',
+            'Figura coleccionable',
+            'Snacks gamer premium',
+            'Accesorio USB sorpresa',
+            'Stickers exclusivos'
+        ]
+    },
+    'fitbox-mensual': {
+        nombre: 'Fitbox mensual',
+        categoria: 'Fitness',
+        precioMensual: 120000,
+        rating: '4.8',
+        imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqZD1C6DElaUq8b3KQZa9OWRSltXfvpCLpLhW3Bk2Avg&s=10',
+        descripcion: 'Kit mensual con suplementos, accesorios deportivos y elementos para entrenar en casa o en el gimnasio con mayor comodidad, seguridad y variedad.',
+        inclusiones: [
+            'Suplemento o pre-entreno',
+            'Botella deportiva',
+            'Bandas de resistencia',
+            'Snacks proteicos',
+            'Guillas de entrenamiento'
+        ]
+    },
+    'cuidado-bienestar': {
+        nombre: 'Cuidado y bienestar',
+        categoria: 'Cuidado personal',
+        precioMensual: 120000,
+        rating: '4.8',
+        imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4hlipP6Nzf61W2_VHdRVjMIqjkZiMuyCTW3o67RSCrQ&s=10',
+        descripcion: 'Productos de higiene, cuidado personal y bienestar para mantener una rutina completa cada mes con artículos premium y útiles de uso diario.',
+        inclusiones: [
+            'Exfoliante corporal',
+            'Vela aromática',
+            'Mascarilla facial',
+            'Aceite esencial',
+            'Té relajante'
+        ]
+    },
+    'techbox-premium': {
+        nombre: 'Techbox premium',
+        categoria: 'Tecnología',
+        precioMensual: 200000,
+        rating: '4.9',
+        imagen: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80',
+        descripcion: 'Suscripción con gadgets, accesorios y productos tecnológicos para potenciar tu espacio digital y mantenerte al día con cada lanzamiento del mundo tech.',
+        inclusiones: [
+            'Power bank 10.000 mAh',
+            'Cable USB-C premium',
+            'Soporte de celular',
+            'Hub USB compacto',
+            'Stickers tech'
+        ]
+    }
+};
+
+const PLANES = {
+    mensual: { label: 'Mensual', meses: 1, descuento: 0 },
+    semestral: { label: 'Semestral', meses: 6, descuento: 0.10 },
+    anual: { label: 'Anual', meses: 12, descuento: 0.20 }
+};
+
+const COSTO_ENVIO = 15000;
+const ALMACEN_SUSCRIPCIONES = 'boxly_suscripciones';
+
+function formatearCOP(valor) {
+    return `${Number(valor).toLocaleString('es-CO')} COP`;
+}
+
+function calcularValorPlan(precioMensual, planKey) {
+    const plan = PLANES[planKey] || PLANES.mensual;
+    const bruto = precioMensual * plan.meses;
+    const ahorro = Math.round(bruto * plan.descuento);
+    const total = bruto - ahorro;
+
+    return {
+        label: plan.label,
+        meses: plan.meses,
+        descuento: plan.descuento,
+        bruto,
+        ahorro,
+        total,
+        equivalenteMensual: Math.round(total / plan.meses)
+    };
+}
+
+function obtenerSuscripcionesGuardadas() {
+    try {
+        const datos = JSON.parse(localStorage.getItem(ALMACEN_SUSCRIPCIONES) || '[]');
+        return Array.isArray(datos) ? datos : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function guardarSuscripcion(suscripcion) {
+    const suscripciones = obtenerSuscripcionesGuardadas();
+    suscripciones.push(suscripcion);
+    localStorage.setItem(ALMACEN_SUSCRIPCIONES, JSON.stringify(suscripciones));
+}
+
 function updateSubscriptionFilterCounts() {
     const cards = document.querySelectorAll('.subscription-card');
     const filterButtons = document.querySelectorAll('.filter-pill');
@@ -41,7 +149,210 @@ window.applySubscriptionFilter = applySubscriptionFilter;
 
 window.updateSubscriptionFilterCounts = updateSubscriptionFilterCounts;
 
+function crearTarjetaSuscripcion(suscripcion) {
+    const article = document.createElement('article');
+    article.className = 'card subscription-card';
+    article.dataset.status = suscripcion.estado || 'active';
+    article.dataset.title = suscripcion.nombre;
+    article.dataset.description = suscripcion.descripcion || 'Suscripción activada desde el catálogo Boxly.';
+    article.dataset.price = `${formatearCOP(suscripcion.precioMensual)} / mes`;
+
+    article.innerHTML = `
+        <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
+        <div class="card-image-container">
+            <img src="${suscripcion.imagen}" alt="${suscripcion.nombre}" class="card-img">
+        </div>
+        <div class="card-body">
+            <h3>${suscripcion.nombre}</h3>
+            <div class="card-meta">
+                <span class="status active">Activo</span>
+                <span class="price">${formatearCOP(suscripcion.precioMensual)}</span>
+            </div>
+            <button class="details-btn" type="button">Ver detalles</button>
+        </div>
+    `;
+
+    return article;
+}
+
+function inyectarSuscripcionesGuardadas() {
+    const grid = document.querySelector('.subscriptions-grid');
+    if (!grid) {
+        return;
+    }
+
+    const suscripciones = obtenerSuscripcionesGuardadas();
+    suscripciones.forEach((suscripcion) => {
+        if (!suscripcion || !suscripcion.nombre) {
+            return;
+        }
+        grid.appendChild(crearTarjetaSuscripcion(suscripcion));
+    });
+}
+
+function initDetalleCaja() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('caja');
+    const caja = CATALOGO[slug] || CATALOGO['gamer-ultimate'];
+    const slugResuelto = CATALOGO[slug] ? slug : 'gamer-ultimate';
+
+    const imagen = document.getElementById('detalleImagen');
+    const titulo = document.getElementById('detalleTitulo');
+    const categoria = document.getElementById('detalleCategoria');
+    const rating = document.getElementById('detalleRating');
+    const descripcion = document.getElementById('detalleDescripcion');
+    const inclusiones = document.getElementById('detalleInclusiones');
+
+    if (imagen) {
+        imagen.src = caja.imagen;
+        imagen.alt = caja.nombre;
+    }
+    if (titulo) {
+        titulo.textContent = caja.nombre;
+    }
+    if (categoria) {
+        categoria.textContent = caja.categoria;
+    }
+    if (rating) {
+        rating.textContent = `⭐ ${caja.rating}`;
+    }
+    if (descripcion) {
+        descripcion.textContent = caja.descripcion;
+    }
+    if (inclusiones) {
+        inclusiones.innerHTML = caja.inclusiones.map((item) => `<li>${item}</li>`).join('');
+    }
+
+    const opciones = document.querySelectorAll('.plan-option input[name="plan"]');
+    const resumenPlan = document.getElementById('resumenPlanNombre');
+    const resumenValor = document.getElementById('resumenValor');
+    const resumenAhorro = document.getElementById('resumenAhorro');
+    const resumenTotal = document.getElementById('resumenTotal');
+
+    const actualizarResumen = () => {
+        const seleccion = document.querySelector('input[name="plan"]:checked');
+        const planKey = seleccion ? seleccion.value : 'mensual';
+        const calculo = calcularValorPlan(caja.precioMensual, planKey);
+
+        document.querySelectorAll('.plan-option').forEach((opcion) => {
+            const input = opcion.querySelector('input');
+            opcion.classList.toggle('selected', Boolean(input && input.checked));
+        });
+
+        if (resumenPlan) {
+            resumenPlan.textContent = `Plan ${calculo.label} (${calculo.meses} ${calculo.meses === 1 ? 'mes' : 'meses'})`;
+        }
+        if (resumenValor) {
+            resumenValor.textContent = formatearCOP(calculo.bruto);
+        }
+        if (resumenAhorro) {
+            resumenAhorro.textContent = calculo.ahorro > 0 ? `-${formatearCOP(calculo.ahorro)}` : '—';
+        }
+        if (resumenTotal) {
+            resumenTotal.textContent = formatearCOP(calculo.total);
+        }
+    };
+
+    opciones.forEach((opcion) => {
+        opcion.addEventListener('change', actualizarResumen);
+    });
+    actualizarResumen();
+
+    const btnContinuar = document.getElementById('btnContinuar');
+    if (btnContinuar) {
+        btnContinuar.addEventListener('click', () => {
+            const seleccion = document.querySelector('input[name="plan"]:checked');
+            const planKey = seleccion ? seleccion.value : 'mensual';
+            window.location.href = `facturacion.html?caja=${encodeURIComponent(slugResuelto)}&plan=${encodeURIComponent(planKey)}`;
+        });
+    }
+}
+
+function initFacturacion() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('caja');
+    const planKey = PLANES[params.get('plan')] ? params.get('plan') : 'mensual';
+    const caja = CATALOGO[slug] || CATALOGO['gamer-ultimate'];
+    const calculo = calcularValorPlan(caja.precioMensual, planKey);
+
+    const nombreCaja = document.getElementById('factCajaNombre');
+    const planCaja = document.getElementById('factPlanNombre');
+    const imagenCaja = document.getElementById('factCajaImagen');
+    const valorPlan = document.getElementById('factValorPlan');
+    const ahorroPlan = document.getElementById('factAhorroPlan');
+    const filaAhorro = document.getElementById('factFilaAhorro');
+    const costoEnvio = document.getElementById('factEnvio');
+    const total = document.getElementById('factTotal');
+
+    if (nombreCaja) {
+        nombreCaja.textContent = caja.nombre;
+    }
+    if (planCaja) {
+        planCaja.textContent = `Plan ${calculo.label} · ${calculo.meses} ${calculo.meses === 1 ? 'mes' : 'meses'}`;
+    }
+    if (imagenCaja) {
+        imagenCaja.src = caja.imagen;
+        imagenCaja.alt = caja.nombre;
+    }
+    if (valorPlan) {
+        valorPlan.textContent = formatearCOP(calculo.total);
+    }
+    if (ahorroPlan) {
+        ahorroPlan.textContent = `-${formatearCOP(calculo.ahorro)}`;
+    }
+    if (filaAhorro) {
+        filaAhorro.style.display = calculo.ahorro > 0 ? 'flex' : 'none';
+    }
+    if (costoEnvio) {
+        costoEnvio.textContent = formatearCOP(COSTO_ENVIO);
+    }
+    if (total) {
+        total.textContent = formatearCOP(calculo.total + COSTO_ENVIO);
+    }
+
+    const formulario = document.getElementById('formFacturacion');
+    if (formulario) {
+        formulario.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            if (!formulario.checkValidity()) {
+                formulario.reportValidity();
+                return;
+            }
+
+            guardarSuscripcion({
+                id: Date.now(),
+                slug: CATALOGO[slug] ? slug : 'gamer-ultimate',
+                nombre: caja.nombre,
+                imagen: caja.imagen,
+                descripcion: caja.descripcion,
+                plan: planKey,
+                planLabel: calculo.label,
+                precioMensual: caja.precioMensual,
+                estado: 'active',
+                fecha: new Date().toISOString()
+            });
+
+            window.location.href = 'cajas.html?nueva=1';
+        });
+    }
+}
+
+function initBannerExito() {
+    const banner = document.getElementById('exitoBanner');
+    if (!banner) {
+        return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('nueva') === '1') {
+        banner.classList.remove('hidden');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    inyectarSuscripcionesGuardadas();
+
     const homeTagButtons = document.querySelectorAll('.tag');
     const homeCards = document.querySelectorAll('.card[data-category]');
 
@@ -63,225 +374,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const openInvoiceFormButton = document.getElementById('openInvoiceForm');
-    const closeInvoiceFormButton = document.getElementById('closeInvoiceForm');
-    const addInvoiceForm = document.getElementById('addInvoiceForm');
-    const addedInvoicesPanel = document.getElementById('addedInvoicesPanel');
-    const addedInvoicesList = document.getElementById('addedInvoicesList');
-
-    if (openInvoiceFormButton && closeInvoiceFormButton && addInvoiceForm &&
-        addedInvoicesPanel && addedInvoicesList) {
-        const invoiceStorageKey = 'boxlyAddedInvoices';
-        const invoiceDateFormatter = new Intl.DateTimeFormat('es-CO', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
+    const catalogoCards = document.querySelectorAll('.card[data-slug]');
+    catalogoCards.forEach((card) => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            window.location.href = `detalle.html?caja=${encodeURIComponent(card.dataset.slug)}`;
         });
-        let addedInvoices = [];
-        const invoicesFeedback = document.createElement('p');
-        invoicesFeedback.className = 'billing-feedback';
-        invoicesFeedback.setAttribute('role', 'status');
-        invoicesFeedback.setAttribute('aria-live', 'polite');
-        addInvoiceForm.append(invoicesFeedback);
-
-        const setInvoiceFormOpen = (isOpen) => {
-            addInvoiceForm.classList.toggle('hidden', !isOpen);
-            openInvoiceFormButton.setAttribute('aria-expanded', String(isOpen));
-            if (isOpen) {
-                addInvoiceForm.querySelector('input[name="subscription"]').focus();
-            }
-        };
-
-        const renderAddedInvoices = () => {
-            addedInvoicesList.replaceChildren();
-            addedInvoicesPanel.hidden = addedInvoices.length === 0;
-
-            addedInvoices.forEach((invoice) => {
-                const row = document.createElement('article');
-                row.className = 'added-invoice-row';
-
-                const details = document.createElement('div');
-                details.className = 'added-invoice-details';
-                const name = document.createElement('strong');
-                name.textContent = invoice.subscription;
-                const reference = document.createElement('span');
-                reference.textContent = `${invoice.id} · ${invoice.date}`;
-                details.append(name, reference);
-
-                const amount = document.createElement('strong');
-                amount.className = 'added-invoice-amount';
-                amount.textContent = `${new Intl.NumberFormat('es-CO').format(invoice.amount)} COP`;
-
-                const status = document.createElement('span');
-                status.className = 'added-invoice-status';
-                status.textContent = 'Pre-factura pendiente';
-
-                row.append(details, amount, status);
-                addedInvoicesList.append(row);
-            });
-        };
-
-        try {
-            const storedInvoices = JSON.parse(localStorage.getItem(invoiceStorageKey) || '[]');
-            if (Array.isArray(storedInvoices)) {
-                addedInvoices = storedInvoices.filter((invoice) =>
-                    typeof invoice.subscription === 'string' &&
-                    Number.isSafeInteger(invoice.amount) &&
-                    invoice.amount > 0 &&
-                    typeof invoice.id === 'string' &&
-                    typeof invoice.date === 'string'
-                );
-            }
-        } catch {
-            invoicesFeedback.textContent = 'No se pudieron recuperar las facturas guardadas en este navegador.';
-        }
-
-        renderAddedInvoices();
-
-        openInvoiceFormButton.addEventListener('click', () => {
-            setInvoiceFormOpen(addInvoiceForm.classList.contains('hidden'));
-        });
-
-        closeInvoiceFormButton.addEventListener('click', () => {
-            setInvoiceFormOpen(false);
-        });
-
-        addInvoiceForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            if (!addInvoiceForm.reportValidity()) return;
-
-            const formData = new FormData(addInvoiceForm);
-            const subscription = String(formData.get('subscription')).trim();
-            const amount = Number(formData.get('amount'));
-            if (!subscription || !Number.isSafeInteger(amount) || amount < 1) {
-                invoicesFeedback.textContent = 'Ingresa el nombre de la suscripción y un valor válido en pesos.';
-                return;
-            }
-
-            const invoice = {
-                id: `BOX-PRE-${new Date().getFullYear()}-${String(1043 + addedInvoices.length).padStart(4, '0')}`,
-                subscription,
-                amount,
-                date: invoiceDateFormatter.format(new Date())
-            };
-            addedInvoices.push(invoice);
-
-            try {
-                localStorage.setItem(invoiceStorageKey, JSON.stringify(addedInvoices));
-                invoicesFeedback.textContent = 'Pre-factura agregada y guardada en este navegador.';
-            } catch {
-                invoicesFeedback.textContent = 'Pre-factura agregada, pero no se pudo guardar para la próxima visita.';
-            }
-
-            renderAddedInvoices();
-            addInvoiceForm.reset();
-            setInvoiceFormOpen(false);
-        });
-    }
-
-    const confirmPaymentButton = document.getElementById('confirmPayment');
-    const paymentStatus = document.getElementById('paymentStatus');
-    const paymentFeedback = document.getElementById('paymentFeedback');
-    const shippingStatus = document.getElementById('shippingStatus');
-    const trackingNumber = document.getElementById('trackingNumber');
-    const deliveryEstimate = document.getElementById('deliveryEstimate');
-    const advanceShippingButton = document.getElementById('advanceShipping');
-    const trackingSteps = document.querySelectorAll('#trackingTimeline li');
-    const paymentOptions = document.querySelectorAll('.payment-option');
-
-    if (confirmPaymentButton && paymentStatus && paymentFeedback && shippingStatus &&
-        trackingNumber && deliveryEstimate && advanceShippingButton && trackingSteps.length) {
-        const shippingStages = [
-            { id: 'preparing', status: 'Preparando tu pedido', action: 'Simular salida a ruta' },
-            { id: 'shipped', status: 'En camino', action: 'Simular llegada a tu ciudad' },
-            { id: 'out-for-delivery', status: 'En reparto', action: 'Simular entrega' },
-            { id: 'delivered', status: 'Entregado', action: 'Envío entregado' }
-        ];
-        let paid = localStorage.getItem('boxlyBillingPaid') === 'true';
-        let stageIndex = 0;
-
-        if (paid) {
-            const savedStage = Number(localStorage.getItem('boxlyShippingStage'));
-            if (Number.isInteger(savedStage) && savedStage >= 0 && savedStage < shippingStages.length) {
-                stageIndex = savedStage;
-            }
-        }
-
-        const renderBillingState = () => {
-            paymentStatus.textContent = paid ? 'Pago confirmado' : 'Pago pendiente';
-            paymentStatus.classList.toggle('paid', paid);
-            paymentStatus.classList.toggle('pending', !paid);
-            confirmPaymentButton.disabled = paid;
-            confirmPaymentButton.textContent = paid ? 'Pago confirmado · 120.000 COP' : 'Confirmar pago de 120.000 COP';
-
-            document.querySelectorAll('input[name="payment-method"]').forEach((input) => {
-                input.disabled = paid;
-            });
-
-            trackingSteps.forEach((step, index) => {
-                step.classList.toggle('completed', paid && index < stageIndex);
-                step.classList.toggle('current', paid && index === stageIndex);
-                if (paid && index === stageIndex) {
-                    step.setAttribute('aria-current', 'step');
-                } else {
-                    step.removeAttribute('aria-current');
-                }
-            });
-
-            if (!paid) {
-                shippingStatus.textContent = 'Esperando el pago';
-                trackingNumber.textContent = 'Se asignará al confirmar el pago';
-                deliveryEstimate.textContent = 'Pendiente de pago';
-                advanceShippingButton.disabled = true;
-                advanceShippingButton.textContent = 'Confirma el pago para iniciar el envío';
-                return;
-            }
-
-            const stage = shippingStages[stageIndex];
-            shippingStatus.textContent = stage.status;
-            trackingNumber.textContent = 'BX-1042-DEMO';
-            deliveryEstimate.textContent = stageIndex === shippingStages.length - 1
-                ? 'Entregado'
-                : '20 de octubre de 2026';
-            advanceShippingButton.disabled = stageIndex === shippingStages.length - 1;
-            advanceShippingButton.textContent = stage.action;
-        };
-
-        paymentOptions.forEach((option) => {
-            const input = option.querySelector('input');
-            input.addEventListener('change', () => {
-                paymentOptions.forEach((item) => item.classList.toggle('selected', item === option));
-            });
-            option.classList.toggle('selected', input.checked);
-        });
-
-        confirmPaymentButton.addEventListener('click', () => {
-            if (paid) return;
-
-            const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
-            if (!selectedMethod) {
-                paymentFeedback.textContent = 'Selecciona un medio de pago para continuar.';
-                return;
-            }
-
-            paid = true;
-            stageIndex = 0;
-            localStorage.setItem('boxlyBillingPaid', 'true');
-            localStorage.setItem('boxlyShippingStage', String(stageIndex));
-            paymentFeedback.textContent = `Pago de demostración confirmado con ${selectedMethod.value}. No se realizó ningún cobro.`;
-            renderBillingState();
-        });
-
-        advanceShippingButton.addEventListener('click', () => {
-            if (!paid || stageIndex >= shippingStages.length - 1) return;
-
-            stageIndex += 1;
-            localStorage.setItem('boxlyShippingStage', String(stageIndex));
-            renderBillingState();
-        });
-
-        renderBillingState();
-    }
+    });
 
     const modal = document.getElementById('subscriptionModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -363,4 +462,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateSubscriptionFilterCounts();
     applySubscriptionFilter('all');
+
+    initBannerExito();
+
+    if (document.body.classList.contains('pagina-detalle')) {
+        initDetalleCaja();
+    }
+
+    if (document.body.classList.contains('pagina-facturacion')) {
+        initFacturacion();
+    }
+
+    const btnCanjear = document.querySelectorAll('.bono-btn[data-bono]');
+    btnCanjear.forEach((button) => {
+        button.addEventListener('click', () => {
+            const card = button.closest('.bono-card');
+            const estado = card ? card.querySelector('.bono-estado') : null;
+            if (estado) {
+                estado.className = 'bono-estado canjeado';
+                estado.textContent = 'Canjeado';
+            }
+            button.disabled = true;
+            button.textContent = 'Canjeado';
+        });
+    });
 });
+
+// --- Lógica para Cierre de Sesión ---
+function cerrarSesion() {
+    // Si guardas datos de sesión temporal, limpia la información del usuario activo
+    localStorage.removeItem('usuarioActivo');
+    
+    alert("Has cerrado sesión exitosamente.");
+    
+    // Redirige a la pantalla de inicio de sesión
+    window.location.href = 'login.html';
+}
+
+// Expone la función globalmente para usarla desde los botones HTML
+window.cerrarSesion = cerrarSesion;
+
+

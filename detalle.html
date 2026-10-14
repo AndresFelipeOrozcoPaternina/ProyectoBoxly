@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxly - Detalle de Caja</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="app-shell pagina-detalle">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <a href="inicio.html" class="brand-link">
+                <h2>Boxly</h2>
+            </a>
+        </div>
+        <br>
+        <br>
+        <nav class="sidebar-nav">
+            <a href="inicio.html" class="nav-item">
+                <span class="icon">🏠</span> <h3>Inicio</h3>
+            </a>
+            <a href="cajas.html" class="nav-item">
+                <span class="icon">📦</span> <h3>Mis cajas</h3>
+            </a>
+            <a href="facturacion.html" class="nav-item">
+                <span class="icon">📋</span> <h3>Facturación</h3>
+            </a>
+            <a href="bonos.html" class="nav-item">
+                <span class="icon">🎁</span> <h3>Bonos</h3>
+            </a>
+            <a href="configuracion.html" class="nav-item">
+                <span class="icon">⚙️</span> <h3>Configuración</h3>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar...">
+            </div>
+
+            <div class="user-actions">
+                <button class="action-btn" title="Notificaciones">🔔</button>
+                <button class="action-btn" title="Carrito">🛒</button>
+                <button class="action-btn profile-btn" title="Perfil" onclick="window.location.href='login.html'">👤</button>
+            </div>
+        </header>
+
+        <main class="content">
+            <a href="inicio.html" class="back-link">← Volver al catálogo</a>
+
+            <section class="detalle-layout">
+                <div class="detalle-media">
+                    <img id="detalleImagen" src="" alt="Imagen de la caja">
+                </div>
+
+                <div class="detalle-info">
+                    <h1 id="detalleTitulo">Caja</h1>
+
+                    <div class="detalle-badges">
+                        <span class="badge-category" id="detalleCategoria">Categoría</span>
+                        <span class="badge-rating-static" id="detalleRating">⭐ 4.8</span>
+                    </div>
+
+                    <p class="detalle-desc" id="detalleDescripcion"></p>
+
+                    <h2 class="detalle-section-title">¿Qué incluye tu caja?</h2>
+                    <ul class="inclusiones-list" id="detalleInclusiones"></ul>
+
+                    <h2 class="detalle-section-title">Elige tu plan de suscripción</h2>
+                    <div class="planes-grid">
+                        <label class="plan-option selected">
+                            <input type="radio" name="plan" value="mensual" checked>
+                            <span class="plan-name">Mensual</span>
+                            <span class="plan-price">Pago mes a mes</span>
+                            <span class="plan-detail">Sin compromiso. Renovación automática.</span>
+                        </label>
+
+                        <label class="plan-option">
+                            <input type="radio" name="plan" value="semestral">
+                            <span class="plan-dto">-10%</span>
+                            <span class="plan-name">Semestral</span>
+                            <span class="plan-price">6 meses</span>
+                            <span class="plan-detail">Ahorras 10% sobre el precio mensual.</span>
+                        </label>
+
+                        <label class="plan-option">
+                            <input type="radio" name="plan" value="anual">
+                            <span class="plan-dto">-20%</span>
+                            <span class="plan-name">Anual</span>
+                            <span class="plan-price">12 meses</span>
+                            <span class="plan-detail">Ahorras 20% sobre el precio mensual.</span>
+                        </label>
+                    </div>
+
+                    <div class="plan-summary">
+                        <div class="plan-summary-row">
+                            <span id="resumenPlanNombre">Plan Mensual (1 mes)</span>
+                            <strong id="resumenValor">—</strong>
+                        </div>
+                        <div class="plan-summary-row">
+                            <span>Ahorro por descuento</span>
+                            <strong id="resumenAhorro">—</strong>
+                        </div>
+                        <div class="plan-summary-row">
+                            <span>Total del plan</span>
+                            <strong id="resumenTotal">—</strong>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" id="btnContinuar" type="button">Continuar con la suscripción</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
