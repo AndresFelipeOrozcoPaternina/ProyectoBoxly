@@ -33,7 +33,7 @@ Páginas complementarias: `registro.html` (HU-2.1), `login.html` (HU-2.2), `bono
 - **RN-03:** La pre-factura incluye valor del plan + costo de envío + total.
 - **RN-04:** La suscripción se activa tras registrar el pago.
 - **RN-11:** Planes mensual, semestral y anual con descuento progresivo.
-- **RF-03 / RF-04:** Modificación de datos de perfil y guardado de preferencias de categorías desde la vista de configuración.
+
 
 ## Enlaces
 
