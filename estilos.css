@@ -419,8 +419,7 @@ body.pagina-inicio {
 /* Efecto al pasar el cursor sobre los iconos superiores para que resalten */
 .pagina-inicio .user-actions .action-btn:hover {
     filter: brightness(0) opacity(0.8);
-<<<<<<< Updated upstream
-=======
+
 }
 
 /* ==========================================
@@ -1680,6 +1679,7 @@ body.app-shell {
     .inclusiones-list {
         grid-template-columns: 1fr;
     }
+
 }
 
 
@@ -1734,5 +1734,5 @@ body.app-shell {
 
 .btn-danger:hover {
     background-color: #ef233c;
->>>>>>> Stashed changes
+
 }

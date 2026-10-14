@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxly - Bonos</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="app-shell pagina-bonos">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <a href="inicio.html" class="brand-link">
+                <h2>Boxly</h2>
+            </a>
+        </div>
+        <br>
+        <br>
+        <nav class="sidebar-nav">
+            <a href="inicio.html" class="nav-item">
+                <span class="icon">🏠</span> <h3>Inicio</h3>
+            </a>
+            <a href="cajas.html" class="nav-item">
+                <span class="icon">📦</span> <h3>Mis cajas</h3>
+            </a>
+            <a href="facturacion.html" class="nav-item">
+                <span class="icon">📋</span> <h3>Facturación</h3>
+            </a>
+            <a href="bonos.html" class="nav-item active">
+                <span class="icon">🎁</span> <h3>Bonos</h3>
+            </a>
+            <a href="configuracion.html" class="nav-item">
+                <span class="icon">⚙️</span> <h3>Configuración</h3>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar...">
+            </div>
+
+            <div class="user-actions">
+                <button class="action-btn" title="Notificaciones">🔔</button>
+                <button class="action-btn" title="Carrito">🛒</button>
+                <button class="action-btn profile-btn" title="Perfil" onclick="window.location.href='login.html'">👤</button>
+            </div>
+        </header>
+
+        <main class="content">
+            <section class="bonos-hero">
+                <img src="bonos_2.jpeg" alt="Bonos Boxly - Programa de recompensas">
+            </section>
+
+            <div class="bonos-header">
+                <div>
+                    <h1>Tus bonos Boxly</h1>
+                    <p>Acumula puntos con cada suscripción y canjéalos por descuentos, tarjetas de regalo y cajas especiales.</p>
+                </div>
+
+                <div class="puntos-card">
+                    <span class="puntos-label">Saldo disponible</span>
+                    <span class="puntos-valor">350 puntos</span>
+                    <span class="puntos-hint">100 puntos = $10.000 COP de descuento</span>
+                </div>
+            </div>
+
+            <section class="bonos-grid">
+                <article class="bono-card has-image">
+                    <span class="bono-estado disponible">Disponible</span>
+                    <img class="bono-imagen" src="bonos_1.jpeg" alt="Tarjeta de regalo Boxly Bonus Card">
+                    <div class="bono-body">
+                        <h3>Tarjeta de regalo Boxly</h3>
+                        <p>Bonus Card por $50.000 COP para canjear en tu próxima suscripción o regalar a un amigo.</p>
+                        <button class="bono-btn" type="button" data-bono="tarjeta-regalo">Canjear por 500 puntos</button>
+                    </div>
+                </article>
+
+                <article class="bono-card">
+                    <span class="bono-estado disponible">Disponible</span>
+                    <div class="bono-icon">🎉</div>
+                    <h3>Bono de bienvenida</h3>
+                    <p>10% de descuento en tu primera suscripción con cualquier plan del catálogo Boxly.</p>
+                    <button class="bono-btn" type="button" data-bono="bienvenida">Canjear</button>
+                </article>
+
+                <article class="bono-card">
+                    <span class="bono-estado disponible">Disponible</span>
+                    <div class="bono-icon">👫</div>
+                    <h3>Invita y gana</h3>
+                    <p>Obtén $20.000 COP de crédito cuando un amigo se registre y active su primera caja con tu código.</p>
+                    <button class="bono-btn" type="button" data-bono="referido">Canjear</button>
+                </article>
+
+                <article class="bono-card">
+                    <span class="bono-estado bloqueado">Bloqueado</span>
+                    <div class="bono-icon">🏆</div>
+                    <h3>Caja gratis por fidelidad</h3>
+                    <p>Recibe una caja mensual gratis al completar 6 suscripciones activas consecutivas.</p>
+                    <button class="bono-btn" type="button" disabled>6/6 suscripciones</button>
+                </article>
+
+                <article class="bono-card">
+                    <span class="bono-estado canjeado">Canjeado</span>
+                    <div class="bono-icon">🎂</div>
+                    <h3>Bono de cumpleaños</h3>
+                    <p>Regalo especial de aniversario Boxly canjeado en tu último cumpleaños.</p>
+                    <button class="bono-btn" type="button" disabled>Canjeado</button>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
