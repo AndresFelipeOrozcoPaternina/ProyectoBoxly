@@ -419,6 +419,7 @@ body.pagina-inicio {
 /* Efecto al pasar el cursor sobre los iconos superiores para que resalten */
 .pagina-inicio .user-actions .action-btn:hover {
     filter: brightness(0) opacity(0.8);
+
 }
 
 /* ==========================================
@@ -1678,4 +1679,60 @@ body.app-shell {
     .inclusiones-list {
         grid-template-columns: 1fr;
     }
+
+}
+
+
+/* --- Estilos para la vista de Configuración --- */
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.config-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.config-card h2 {
+    margin-top: 0;
+    color: #5b46f6;
+    border-bottom: 2px solid #f4f6f8;
+    padding-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fafafa;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+}
+
+.btn-danger {
+    background-color: #d90429;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 15px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #ef233c;
+
 }

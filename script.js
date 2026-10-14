@@ -487,3 +487,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// --- Lógica para Cierre de Sesión ---
+function cerrarSesion() {
+    // Si guardas datos de sesión temporal, limpia la información del usuario activo
+    localStorage.removeItem('usuarioActivo');
+    
+    alert("Has cerrado sesión exitosamente.");
+    
+    // Redirige a la pantalla de inicio de sesión
+    window.location.href = 'login.html';
+}
+
+// Expone la función globalmente para usarla desde los botones HTML
+window.cerrarSesion = cerrarSesion;
+
+
