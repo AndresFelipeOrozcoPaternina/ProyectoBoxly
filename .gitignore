@@ -1,0 +1,16 @@
+## .NET / C#
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio / VS Code
+.vscode/
+.vs/
+.idea/
+
+## OS generated
+.DS_Store
+Thumbs.db
