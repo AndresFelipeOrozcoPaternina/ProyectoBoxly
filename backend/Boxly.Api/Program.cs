@@ -54,6 +54,12 @@ builder.Services.AddScoped<ISuscripcionService, SuscripcionService>();
 
 var app = builder.Build();
 
+// Modo de verificación automática de patrones GoF y flujos alternativos
+if (args.Contains("--verify-suite"))
+{
+    return await TestSuiteRunner.EjecutarPruebasAsync(app.Services);
+}
+
 app.UseCors("CorsFrontend");
 
 app.UseAuthorization();
@@ -61,3 +67,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+return 0;
