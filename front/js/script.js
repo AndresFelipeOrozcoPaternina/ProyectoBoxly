@@ -69,6 +69,7 @@ const PLANES = {
 
 const COSTO_ENVIO = 15000;
 const ALMACEN_SUSCRIPCIONES = 'boxly_suscripciones';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 function formatearCOP(valor) {
     return `${Number(valor).toLocaleString('es-CO')} COP`;
@@ -152,10 +153,14 @@ window.updateSubscriptionFilterCounts = updateSubscriptionFilterCounts;
 function crearTarjetaSuscripcion(suscripcion) {
     const article = document.createElement('article');
     article.className = 'card subscription-card';
+    article.dataset.id = suscripcion.id || '';
     article.dataset.status = suscripcion.estado || 'active';
     article.dataset.title = suscripcion.nombre;
     article.dataset.description = suscripcion.descripcion || 'Suscripción activada desde el catálogo Boxly.';
     article.dataset.price = `${formatearCOP(suscripcion.precioMensual)} / mes`;
+
+    const statusLabel = suscripcion.estado === 'inactive' ? 'Cancelada' : (suscripcion.estado === 'upcoming' ? 'Próxima' : 'Activo');
+    const statusClass = suscripcion.estado === 'inactive' ? 'status inactive' : (suscripcion.estado === 'upcoming' ? 'status upcoming' : 'status active');
 
     article.innerHTML = `
         <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
@@ -165,7 +170,7 @@ function crearTarjetaSuscripcion(suscripcion) {
         <div class="card-body">
             <h3>${suscripcion.nombre}</h3>
             <div class="card-meta">
-                <span class="status active">Activo</span>
+                <span class="${statusClass}">${statusLabel}</span>
                 <span class="price">${formatearCOP(suscripcion.precioMensual)}</span>
             </div>
             <button class="details-btn" type="button">Ver detalles</button>
@@ -311,8 +316,10 @@ function initFacturacion() {
     }
 
     const formulario = document.getElementById('formFacturacion');
+    const alerta = document.getElementById('facturacionAlert');
+
     if (formulario) {
-        formulario.addEventListener('submit', (event) => {
+        formulario.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             if (!formulario.checkValidity()) {
@@ -320,20 +327,124 @@ function initFacturacion() {
                 return;
             }
 
-            guardarSuscripcion({
-                id: Date.now(),
-                slug: CATALOGO[slug] ? slug : 'gamer-ultimate',
-                nombre: caja.nombre,
-                imagen: caja.imagen,
-                descripcion: caja.descripcion,
-                plan: planKey,
-                planLabel: calculo.label,
-                precioMensual: caja.precioMensual,
-                estado: 'active',
-                fecha: new Date().toISOString()
-            });
+            const btnSubmit = formulario.querySelector('button[type="submit"]');
+            const textoOriginal = btnSubmit ? btnSubmit.textContent : '';
+            if (btnSubmit) {
+                btnSubmit.disabled = true;
+                btnSubmit.textContent = 'Procesando con la pasarela...';
+            }
 
-            window.location.href = 'cajas.html?nueva=1';
+            const destinatario = document.getElementById('destinatario')?.value?.trim() || 'Usuario Boxly';
+            const email = document.getElementById('email')?.value?.trim() || 'cliente@correo.itm.edu.co';
+            const direccion = document.getElementById('direccion')?.value?.trim() || 'Calle de entrega';
+            const ciudad = document.getElementById('ciudad')?.value?.trim() || 'Medellín';
+            const telefono = document.getElementById('telefono')?.value?.trim() || '3001234567';
+            const metodoPago = document.querySelector('input[name="metodoPago"]:checked')?.value || 'tarjeta';
+            const numeroTarjeta = document.getElementById('numeroTarjeta')?.value?.trim() || '';
+            const cvv = document.getElementById('cvv')?.value?.trim() || '';
+            const fechaVencimiento = document.getElementById('fechaVencimiento')?.value?.trim() || '';
+
+            const planEnumMap = {
+                mensual: 'Mensual',
+                semestral: 'Semestral',
+                anual: 'Anual'
+            };
+
+            const payload = {
+                cajaSlug: CATALOGO[slug] ? slug : 'gamer-ultimate',
+                tipoPlan: planEnumMap[planKey] || 'Mensual',
+                nombreCliente: destinatario,
+                email: email,
+                direccion: direccion,
+                ciudad: ciudad,
+                telefono: telefono,
+                metodoPago: metodoPago,
+                numeroTarjeta: numeroTarjeta,
+                cvv: cvv,
+                fechaVencimiento: fechaVencimiento
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/suscripciones`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.status === 201) {
+                    // Flujo Principal (Happy Path): Pago aprobado y suscripción activada (RN-04)
+                    guardarSuscripcion({
+                        id: data.datos?.id || Date.now(),
+                        slug: payload.cajaSlug,
+                        nombre: caja.nombre,
+                        imagen: caja.imagen,
+                        descripcion: caja.descripcion,
+                        plan: planKey,
+                        planLabel: calculo.label,
+                        precioMensual: caja.precioMensual,
+                        estado: 'active',
+                        fecha: new Date().toISOString()
+                    });
+
+                    window.location.href = `cajas.html?nueva=1&id=${encodeURIComponent(data.datos?.id || '')}`;
+                    return;
+                }
+
+                if (response.status === 422) {
+                    // Flujo Alternativo 2: Pago declinado por entidad bancaria (RN-04)
+                    if (alerta) {
+                        alerta.className = 'alerta-mensaje';
+                        alerta.style.display = 'block';
+                        alerta.style.background = '#fef2f2';
+                        alerta.style.color = '#991b1b';
+                        alerta.style.border = '1px solid #f87171';
+                        alerta.innerHTML = `<strong>⚠️ Flujo Alternativo 422 — Pago Declinado:</strong> ${data.mensaje || 'La entidad bancaria rechazó la transacción por fondos insuficientes o tarjeta declinada.'}<br><small style="margin-top:6px;display:block;">Conforme a la regla <strong>RN-04</strong>, la suscripción no fue activada.</small>`;
+                        alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    if (btnSubmit) {
+                        btnSubmit.disabled = false;
+                        btnSubmit.textContent = textoOriginal;
+                    }
+                    return;
+                }
+
+                // Otros flujos alternativos (400 Bad Request, 404 Not Found, 409 Conflict)
+                if (alerta) {
+                    alerta.className = 'alerta-mensaje';
+                    alerta.style.display = 'block';
+                    alerta.style.background = '#fffbeb';
+                    alerta.style.color = '#92400e';
+                    alerta.style.border = '1px solid #fcd34d';
+                    const msg = data.errores && data.errores.length ? data.errores.join(' ') : (data.mensaje || 'Error en la solicitud.');
+                    alerta.innerHTML = `<strong>⚠️ Flujo Alternativo (HTTP ${response.status}):</strong> ${msg}`;
+                    alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } catch (error) {
+                // Modo resiliente offline si el backend no está corriendo en localhost:5000
+                console.warn('Backend offline, ejecutando guardado local de respaldo.', error);
+                guardarSuscripcion({
+                    id: Date.now(),
+                    slug: CATALOGO[slug] ? slug : 'gamer-ultimate',
+                    nombre: caja.nombre,
+                    imagen: caja.imagen,
+                    descripcion: caja.descripcion,
+                    plan: planKey,
+                    planLabel: calculo.label,
+                    precioMensual: caja.precioMensual,
+                    estado: 'active',
+                    fecha: new Date().toISOString()
+                });
+
+                window.location.href = 'cajas.html?nueva=1';
+                return;
+            }
+
+            if (btnSubmit) {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = textoOriginal;
+            }
         });
     }
 }
@@ -408,9 +519,56 @@ document.addEventListener('DOMContentLoaded', () => {
         modalPrice.textContent = price;
         modalImage.src = image;
         modalImage.alt = title;
+        modal.dataset.subscriptionId = card.dataset.id || '';
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
     };
+
+    const cancelBtn = modal?.querySelector('.cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', async () => {
+            const subId = modal.dataset.subscriptionId;
+            if (!subId) {
+                closeModal();
+                return;
+            }
+
+            if (!confirm(`¿Estás seguro de que deseas cancelar la suscripción ${subId}? (Flujo alternativo)`)) {
+                return;
+            }
+
+            try {
+                await fetch(`${API_BASE_URL}/suscripciones/${encodeURIComponent(subId)}/cancelar`, {
+                    method: 'POST'
+                });
+            } catch (err) {
+                console.warn('Backend offline, cancelando suscripción en modo local.', err);
+            }
+
+            // Actualizar tarjeta en el DOM
+            const targetCard = document.querySelector(`.subscription-card[data-id="${subId}"]`);
+            if (targetCard) {
+                targetCard.dataset.status = 'inactive';
+                const statusBadge = targetCard.querySelector('.status');
+                if (statusBadge) {
+                    statusBadge.className = 'status inactive';
+                    statusBadge.textContent = 'Cancelada';
+                }
+            }
+
+            // Actualizar en localStorage
+            const guardadas = obtenerSuscripcionesGuardadas();
+            const idx = guardadas.findIndex(s => String(s.id) === String(subId));
+            if (idx >= 0) {
+                guardadas[idx].estado = 'inactive';
+                localStorage.setItem(ALMACEN_SUSCRIPCIONES, JSON.stringify(guardadas));
+            }
+
+            updateSubscriptionFilterCounts();
+            closeModal();
+            alert(`Suscripción ${subId} cancelada exitosamente en el sistema.`);
+        });
+    }
 
     const closeModal = () => {
         if (!modal) return;

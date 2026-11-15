@@ -57,6 +57,8 @@
                 <p>Revisa los datos de tu suscripción y confirma tu pre-factura para activar la caja.</p>
             </div>
 
+            <div id="facturacionAlert" class="alerta-mensaje hidden" style="margin-bottom: 20px; padding: 14px 18px; border-radius: 8px; font-weight: 500; font-size: 0.95rem; line-height: 1.4;"></div>
+
             <section class="facturacion-layout">
                 <form id="formFacturacion" novalidate>
                     <div class="seccion-card">
@@ -65,6 +67,11 @@
                         <div class="campo">
                             <label for="destinatario">Nombre del destinatario</label>
                             <input type="text" id="destinatario" name="destinatario" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" placeholder="usuario@correo.com" required>
                         </div>
 
                         <div class="campo">
@@ -89,7 +96,33 @@
 
                         <div class="metodo-pago-list">
                             <label class="metodo-pago">
-                                <input type="radio" name="metodoPago" value="transferencia" checked>
+                                <input type="radio" name="metodoPago" value="tarjeta" checked>
+                                <span>
+                                    <strong>Tarjeta de crédito / débito (Pasarela en línea)</strong>
+                                    <span>Validación y cobro automático en tiempo real con la API de pagos.</span>
+                                </span>
+                            </label>
+
+                            <div id="seccionTarjeta" style="margin: 8px 0 16px 28px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;">
+                                <div class="campo">
+                                    <label for="numeroTarjeta">Número de tarjeta</label>
+                                    <input type="text" id="numeroTarjeta" name="numeroTarjeta" placeholder="4532 1234 5678 9010" value="4532123456789010">
+                                    <small style="color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 4px;">💡 Tip para sustentar: Usa una tarjeta terminada en <strong>0000</strong> para probar el flujo alternativo de fondos insuficientes.</small>
+                                </div>
+                                <div class="campo-row" style="margin-top: 8px;">
+                                    <div class="campo">
+                                        <label for="fechaVencimiento">Vencimiento</label>
+                                        <input type="text" id="fechaVencimiento" name="fechaVencimiento" placeholder="12/28" value="12/28">
+                                    </div>
+                                    <div class="campo">
+                                        <label for="cvv">CVV</label>
+                                        <input type="text" id="cvv" name="cvv" placeholder="123" value="123">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="metodo-pago">
+                                <input type="radio" name="metodoPago" value="transferencia">
                                 <span>
                                     <strong>Transferencia bancaria</strong>
                                     <span>Recibirás la pre-factura por correo y confirmarás el pago de forma manual antes del despacho.</span>
