@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1250" viewBox="0 0 1800 1250"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#334e68" stroke-width="1.5"/></marker></defs><rect width="1800" height="1250" fill="white"/>
+<rect x="25.0" y="100.0" width="790.0" height="970.0" rx="14" fill="#f8fbff" stroke="#d9e6ef"/>
+<rect x="845.0" y="100.0" width="930.0" height="680.0" rx="14" fill="#f8fbff" stroke="#d9e6ef"/>
+<rect x="845.0" y="805.0" width="930.0" height="390.0" rx="14" fill="#f8fbff" stroke="#d9e6ef"/>
+<polyline points="100.0,195.0 250.0,195.0" fill="none" stroke="#334e68" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="332.5,250.0 332.5,320.0 215.0,320.0 215.0,450.0" fill="none" stroke="#334e68" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="497.5,250.0 497.5,320.0 615.0,320.0 615.0,450.0" fill="none" stroke="#334e68" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="215.0,560.0 215.0,855.0 250.0,855.0" fill="none" stroke="#334e68" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="615.0,560.0 615.0,855.0 580.0,855.0" fill="none" stroke="#334e68" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="415.0,910.0 415.0,990.0" fill="none" stroke="#334e68" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="900.0" y="61.78" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="700" fill="#243b53">BOXLY - Maquina de estados de Suscripcion</text>
+<text x="415.0" y="100.44" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#243b53">Comportamiento actual del backend</text>
+<circle cx="85.0" cy="195.0" r="15.0" fill="#102a43" stroke="#102a43" stroke-width="2"/>
+<rect x="250.0" y="140.0" width="330.0" height="110.0" rx="12" fill="#eaf4ff" stroke="#486581" stroke-width="2"/>
+<text x="415.0" y="187.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">PendientePago</text>
+<text x="415.0" y="216.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">entry / registrarDatosYFecha()</text>
+<rect x="65.0" y="450.0" width="300.0" height="110.0" rx="12" fill="#eaf4ff" stroke="#486581" stroke-width="2"/>
+<text x="215.0" y="497.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">Activa</text>
+<text x="215.0" y="526.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">entry / guardarYNotificar()</text>
+<rect x="465.0" y="450.0" width="300.0" height="110.0" rx="12" fill="#f4efff" stroke="#486581" stroke-width="2"/>
+<text x="615.0" y="497.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">PagoRechazado</text>
+<text x="615.0" y="526.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">entry / guardarYNotificar()</text>
+<text x="120.0" y="351.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">procesarPago()</text>
+<text x="120.0" y="375.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">[pago.aprobado]</text>
+<text x="120.0" y="399.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">/ registrarFecha();</text>
+<text x="120.0" y="423.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">descontarCaja()</text>
+<text x="715.0" y="363.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">procesarPago()</text>
+<text x="715.0" y="387.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">[!pago.aprobado]</text>
+<text x="715.0" y="411.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">/ guardarMotivo()</text>
+<rect x="250.0" y="800.0" width="330.0" height="110.0" rx="12" fill="#eaf4ff" stroke="#486581" stroke-width="2"/>
+<text x="415.0" y="847.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">Cancelada</text>
+<text x="415.0" y="876.22" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#102a43">entry / actualizarYNotificar()</text>
+<text x="120.0" y="658.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">cancelar(id)</text>
+<text x="120.0" y="682.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">[existe(id) &amp;&amp;</text>
+<text x="120.0" y="706.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">estado != Cancelada]</text>
+<text x="715.0" y="658.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">cancelar(id)</text>
+<text x="715.0" y="682.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">[existe(id) &amp;&amp;</text>
+<text x="715.0" y="706.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">estado != Cancelada]</text>
+<circle cx="415.0" cy="1005.0" r="15.0" fill="#ffffff" stroke="#102a43" stroke-width="2"/>
+<circle cx="415.0" cy="1005.0" r="8.0" fill="#102a43" stroke="#102a43" stroke-width="2"/>
+<text x="605.0" y="967.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Fin del ciclo modelado</text>
+<text x="420.0" y="1115.44" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#243b53">Solo se modela Suscripcion, no el envio de la caja.</text>
+<text x="420.0" y="1140.44" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#243b53">Los nombres de las acciones resumen el codigo.</text>
+<text x="420.0" y="1165.44" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#243b53">Los avisos de Observer se simulan mediante logs.</text>
+<text x="1310.0" y="152.68" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#243b53">Tabla de analisis de estados y transiciones</text>
+<rect x="855.0" y="190.0" width="165.0" height="55.0" rx="0" fill="#def0ff" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="222.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#243b53">Estado actual</text>
+<rect x="1020.0" y="190.0" width="155.0" height="55.0" rx="0" fill="#def0ff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="222.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#243b53">Evento</text>
+<rect x="1175.0" y="190.0" width="230.0" height="55.0" rx="0" fill="#def0ff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="222.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#243b53">Condicion</text>
+<rect x="1405.0" y="190.0" width="205.0" height="55.0" rx="0" fill="#def0ff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="222.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#243b53">Accion</text>
+<rect x="1610.0" y="190.0" width="155.0" height="55.0" rx="0" fill="#def0ff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="222.62" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#243b53">Nuevo estado</text>
+<rect x="855.0" y="245.0" width="165.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="290.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Inicial</text>
+<rect x="1020.0" y="245.0" width="155.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="289.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">crearEntidad()</text>
+<rect x="1175.0" y="245.0" width="230.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="278.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Datos y caja</text>
+<text x="1290.0" y="301.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">validados antes</text>
+<rect x="1405.0" y="245.0" width="205.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="278.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Registrar datos</text>
+<text x="1507.5" y="301.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">y fecha</text>
+<rect x="1610.0" y="245.0" width="155.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="290.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">PendientePago</text>
+<rect x="855.0" y="325.0" width="165.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="370.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">PendientePago</text>
+<rect x="1020.0" y="325.0" width="155.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="369.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">procesarPago()</text>
+<rect x="1175.0" y="325.0" width="230.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="369.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">[pago.aprobado]</text>
+<rect x="1405.0" y="325.0" width="205.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="346.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Registrar activacion;</text>
+<text x="1507.5" y="369.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">descontar; guardar;</text>
+<text x="1507.5" y="392.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">notificar</text>
+<rect x="1610.0" y="325.0" width="155.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="370.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Activa</text>
+<rect x="855.0" y="405.0" width="165.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="450.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">PendientePago</text>
+<rect x="1020.0" y="405.0" width="155.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="449.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">procesarPago()</text>
+<rect x="1175.0" y="405.0" width="230.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="449.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">[!pago.aprobado]</text>
+<rect x="1405.0" y="405.0" width="205.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="438.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Guardar motivo;</text>
+<text x="1507.5" y="461.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">guardar; notificar</text>
+<rect x="1610.0" y="405.0" width="155.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="450.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">PagoRechazado</text>
+<rect x="855.0" y="485.0" width="165.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="530.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Activa</text>
+<rect x="1020.0" y="485.0" width="155.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="529.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">cancelar(id)</text>
+<rect x="1175.0" y="485.0" width="230.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="518.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">[existe(id) &amp;&amp;</text>
+<text x="1290.0" y="541.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">estado != Cancelada]</text>
+<rect x="1405.0" y="485.0" width="205.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="518.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Actualizar;</text>
+<text x="1507.5" y="541.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">notificar</text>
+<rect x="1610.0" y="485.0" width="155.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="530.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Cancelada</text>
+<rect x="855.0" y="565.0" width="165.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="610.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">PagoRechazado</text>
+<rect x="1020.0" y="565.0" width="155.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="609.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">cancelar(id)</text>
+<rect x="1175.0" y="565.0" width="230.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="598.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">[existe(id) &amp;&amp;</text>
+<text x="1290.0" y="621.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">estado != Cancelada]</text>
+<rect x="1405.0" y="565.0" width="205.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="598.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Actualizar;</text>
+<text x="1507.5" y="621.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">notificar</text>
+<rect x="1610.0" y="565.0" width="155.0" height="80.0" rx="0" fill="#f1f8fd" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="610.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Cancelada</text>
+<rect x="855.0" y="645.0" width="165.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="937.5" y="690.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Cancelada</text>
+<rect x="1020.0" y="645.0" width="155.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1097.5" y="689.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Finalizacion</text>
+<rect x="1175.0" y="645.0" width="230.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1290.0" y="689.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">No aplica</text>
+<rect x="1405.0" y="645.0" width="205.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1507.5" y="689.8" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#243b53">Ninguna</text>
+<rect x="1610.0" y="645.0" width="155.0" height="80.0" rx="0" fill="#ffffff" stroke="#ccdfed" stroke-width="1"/>
+<text x="1687.5" y="690.12" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#243b53">Final</text>
+<text x="1310.0" y="857.68" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#243b53">Reglas y controles del modelo actual</text>
+<text x="890.0" y="930.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">1. RN-04: solo el pago aprobado activa la suscripcion.</text>
+<text x="890.0" y="956.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">2. Si el pago falla, se registra el motivo y no se descuenta stock.</text>
+<text x="890.0" y="982.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">3. Cancelar exige que exista y que no este cancelada.</text>
+<text x="890.0" y="1008.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">4. El codigo permite cancelar tambien un pago rechazado.</text>
+<text x="890.0" y="1034.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">5. Cancelada no tiene nuevas transiciones en este modelo.</text>
+<text x="890.0" y="1060.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">6. Pausada existe en el enum, pero sus funciones faltan.</text>
+<text x="890.0" y="1086.26" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#243b53">7. Las condiciones se revisan antes de cambiar el estado.</text>
+<text x="1312.5" y="1142.94" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#8a5600">RN-07: el codigo descuenta al aprobar el pago,</text>
+<text x="1312.5" y="1167.94" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#8a5600">aunque la regla indica descontar al preparar el envio.</text>
+</svg>

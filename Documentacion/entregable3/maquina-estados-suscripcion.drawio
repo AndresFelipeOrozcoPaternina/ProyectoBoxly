@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="suscripcion-actual" name="Suscripcion actual">
+    <mxGraphModel grid="1" gridSize="10" guides="1" connect="1" arrows="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1250" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="panel-diagrama" value="" style="rounded=1;arcSize=3;fillColor=#f8fbff;strokeColor=#d9e6ef;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="100" width="790" height="970" />
+        </mxCell>
+        <mxCell id="panel-tabla" value="" style="rounded=1;arcSize=3;fillColor=#f8fbff;strokeColor=#d9e6ef;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="100" width="930" height="680" />
+        </mxCell>
+        <mxCell id="panel-reglas" value="" style="rounded=1;arcSize=3;fillColor=#f8fbff;strokeColor=#d9e6ef;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="805" width="930" height="390" />
+        </mxCell>
+        <mxCell id="titulo" value="BOXLY - Maquina de estados de Suscripcion" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=29;fontStyle=1;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="25" width="1720" height="55" />
+        </mxCell>
+        <mxCell id="subtitulo" value="Comportamiento actual del backend" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=17;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="80" width="730" height="30" />
+        </mxCell>
+        <mxCell id="inicio" value="" style="ellipse;fillColor=#102a43;strokeColor=#102a43;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="70" y="180" width="30" height="30" />
+        </mxCell>
+        <mxCell id="pendiente" value="PendientePago&#10;entry / registrarDatosYFecha()" style="rounded=1;arcSize=15;whiteSpace=wrap;html=0;fillColor=#eaf4ff;strokeColor=#486581;strokeWidth=2;fontFamily=Arial;fontSize=21;fontColor=#102a43;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="250" y="140" width="330" height="110" />
+        </mxCell>
+        <mxCell id="iniciar" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#334e68;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="inicio" target="pendiente">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="activa" value="Activa&#10;entry / guardarYNotificar()" style="rounded=1;arcSize=15;whiteSpace=wrap;html=0;fillColor=#eaf4ff;strokeColor=#486581;strokeWidth=2;fontFamily=Arial;fontSize=21;fontColor=#102a43;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="65" y="450" width="300" height="110" />
+        </mxCell>
+        <mxCell id="rechazado" value="PagoRechazado&#10;entry / guardarYNotificar()" style="rounded=1;arcSize=15;whiteSpace=wrap;html=0;fillColor=#f4efff;strokeColor=#486581;strokeWidth=2;fontFamily=Arial;fontSize=21;fontColor=#102a43;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="465" y="450" width="300" height="110" />
+        </mxCell>
+        <mxCell id="aprobar" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#334e68;strokeWidth=2;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="pendiente" target="activa">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="332.5" y="320" />
+              <mxPoint x="215" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rechazar" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#334e68;strokeWidth=2;exitX=0.75;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="pendiente" target="rechazado">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="497.5" y="320" />
+              <mxPoint x="615" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-aprobar" value="procesarPago()&#10;[pago.aprobado]&#10;/ registrarFecha();&#10;descontarCaja()" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="325" width="170" height="115" />
+        </mxCell>
+        <mxCell id="label-rechazar" value="procesarPago()&#10;[!pago.aprobado]&#10;/ guardarMotivo()" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="335" width="170" height="95" />
+        </mxCell>
+        <mxCell id="cancelada" value="Cancelada&#10;entry / actualizarYNotificar()" style="rounded=1;arcSize=15;whiteSpace=wrap;html=0;fillColor=#eaf4ff;strokeColor=#486581;strokeWidth=2;fontFamily=Arial;fontSize=21;fontColor=#102a43;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="250" y="800" width="330" height="110" />
+        </mxCell>
+        <mxCell id="cancelar-activa" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#334e68;strokeWidth=2;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" parent="1" source="activa" target="cancelada">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="215" y="855" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cancelar-rechazada" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#334e68;strokeWidth=2;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" edge="1" parent="1" source="rechazado" target="cancelada">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="615" y="855" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-cancelar-izq" value="cancelar(id)&#10;[existe(id) &amp;&amp;&#10;estado != Cancelada]" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="625" width="170" height="105" />
+        </mxCell>
+        <mxCell id="label-cancelar-der" value="cancelar(id)&#10;[existe(id) &amp;&amp;&#10;estado != Cancelada]" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="625" width="170" height="105" />
+        </mxCell>
+        <mxCell id="fin" value="" style="ellipse;fillColor=#ffffff;strokeColor=#102a43;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="990" width="30" height="30" />
+        </mxCell>
+        <mxCell id="fin_dot" value="" style="ellipse;fillColor=#102a43;strokeColor=#102a43;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="407" y="997" width="16" height="16" />
+        </mxCell>
+        <mxCell id="cerrar" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#334e68;strokeWidth=2;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cancelada" target="fin">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="fin-nota" value="Fin del ciclo modelado" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="945" width="310" height="35" />
+        </mxCell>
+        <mxCell id="nota-diagrama" value="Solo se modela Suscripcion, no el envio de la caja.&#10;Los nombres de las acciones resumen el codigo.&#10;Los avisos de Observer se simulan mediante logs." style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=17;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="1090" width="760" height="90" />
+        </mxCell>
+        <mxCell id="tabla-titulo" value="Tabla de analisis de estados y transiciones" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=24;fontStyle=1;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="120" width="890" height="50" />
+        </mxCell>
+        <mxCell id="actual-0-0" value="Estado actual" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#def0ff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="190" width="165" height="55" />
+        </mxCell>
+        <mxCell id="actual-0-1" value="Evento" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#def0ff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="190" width="155" height="55" />
+        </mxCell>
+        <mxCell id="actual-0-2" value="Condicion" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#def0ff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="190" width="230" height="55" />
+        </mxCell>
+        <mxCell id="actual-0-3" value="Accion" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#def0ff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="190" width="205" height="55" />
+        </mxCell>
+        <mxCell id="actual-0-4" value="Nuevo estado" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#def0ff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="190" width="155" height="55" />
+        </mxCell>
+        <mxCell id="actual-1-0" value="Inicial" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="245" width="165" height="80" />
+        </mxCell>
+        <mxCell id="actual-1-1" value="crearEntidad()" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="245" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-1-2" value="Datos y caja&#10;validados antes" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="245" width="230" height="80" />
+        </mxCell>
+        <mxCell id="actual-1-3" value="Registrar datos&#10;y fecha" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="245" width="205" height="80" />
+        </mxCell>
+        <mxCell id="actual-1-4" value="PendientePago" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="245" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-2-0" value="PendientePago" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="325" width="165" height="80" />
+        </mxCell>
+        <mxCell id="actual-2-1" value="procesarPago()" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="325" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-2-2" value="[pago.aprobado]" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="325" width="230" height="80" />
+        </mxCell>
+        <mxCell id="actual-2-3" value="Registrar activacion;&#10;descontar; guardar;&#10;notificar" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="325" width="205" height="80" />
+        </mxCell>
+        <mxCell id="actual-2-4" value="Activa" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="325" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-3-0" value="PendientePago" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="405" width="165" height="80" />
+        </mxCell>
+        <mxCell id="actual-3-1" value="procesarPago()" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="405" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-3-2" value="[!pago.aprobado]" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="405" width="230" height="80" />
+        </mxCell>
+        <mxCell id="actual-3-3" value="Guardar motivo;&#10;guardar; notificar" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="405" width="205" height="80" />
+        </mxCell>
+        <mxCell id="actual-3-4" value="PagoRechazado" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="405" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-4-0" value="Activa" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="485" width="165" height="80" />
+        </mxCell>
+        <mxCell id="actual-4-1" value="cancelar(id)" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="485" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-4-2" value="[existe(id) &amp;&amp;&#10;estado != Cancelada]" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="485" width="230" height="80" />
+        </mxCell>
+        <mxCell id="actual-4-3" value="Actualizar;&#10;notificar" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="485" width="205" height="80" />
+        </mxCell>
+        <mxCell id="actual-4-4" value="Cancelada" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="485" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-5-0" value="PagoRechazado" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="565" width="165" height="80" />
+        </mxCell>
+        <mxCell id="actual-5-1" value="cancelar(id)" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="565" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-5-2" value="[existe(id) &amp;&amp;&#10;estado != Cancelada]" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="565" width="230" height="80" />
+        </mxCell>
+        <mxCell id="actual-5-3" value="Actualizar;&#10;notificar" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="565" width="205" height="80" />
+        </mxCell>
+        <mxCell id="actual-5-4" value="Cancelada" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#f1f8fd;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="565" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-6-0" value="Cancelada" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="855" y="645" width="165" height="80" />
+        </mxCell>
+        <mxCell id="actual-6-1" value="Finalizacion" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="645" width="155" height="80" />
+        </mxCell>
+        <mxCell id="actual-6-2" value="No aplica" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1175" y="645" width="230" height="80" />
+        </mxCell>
+        <mxCell id="actual-6-3" value="Ninguna" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=15;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1405" y="645" width="205" height="80" />
+        </mxCell>
+        <mxCell id="actual-6-4" value="Final" style="whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#ccdfed;fontFamily=Arial;fontSize=16;fontColor=#243b53;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1610" y="645" width="155" height="80" />
+        </mxCell>
+        <mxCell id="reglas-titulo" value="Reglas y controles del modelo actual" style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=24;fontStyle=1;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="870" y="825" width="880" height="50" />
+        </mxCell>
+        <mxCell id="reglas" value="1. RN-04: solo el pago aprobado activa la suscripcion.&#10;2. Si el pago falla, se registra el motivo y no se descuenta stock.&#10;3. Cancelar exige que exista y que no este cancelada.&#10;4. El codigo permite cancelar tambien un pago rechazado.&#10;5. Cancelada no tiene nuevas transiciones en este modelo.&#10;6. Pausada existe en el enum, pero sus funciones faltan.&#10;7. Las condiciones se revisan antes de cambiar el estado." style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=18;fontStyle=0;fontColor=#243b53;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="880" y="890" width="870" height="225" />
+        </mxCell>
+        <mxCell id="reglas-limite" value="RN-07: el codigo descuenta al aprobar el pago,&#10;aunque la regla indica descontar al preparar el envio." style="text;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=17;fontStyle=0;fontColor=#8a5600;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="880" y="1120" width="865" height="60" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  </mxfile>
