@@ -252,13 +252,21 @@ A continuación se registra el cumplimiento del requisito de commits significati
 
 # **7. Anexos**
 
-### 7.1 Enlaces Principales
+### 7.1 Enlaces Principales del Proyecto
 * **Repositorio Git Oficial:** [https://github.com/AndresFelipeOrozcoPaternina/ProyectoBoxly](https://github.com/AndresFelipeOrozcoPaternina/ProyectoBoxly)
-* **Rama de Trabajo de Backend y MVP:** `rama-jose`
-* **Prototipo Figma:** [https://www.figma.com/community/file/1676053533736794296](https://www.figma.com/community/file/1676053533736794296)
+* **Rama de Trabajo de Backend y MVP:** [rama-jose](https://github.com/AndresFelipeOrozcoPaternina/ProyectoBoxly/tree/rama-jose)
+* **Prototipo Navegable en Figma:** [https://www.figma.com/community/file/1676053533736794296](https://www.figma.com/community/file/1676053533736794296)
 
-### 7.2 Evidencia de la Suite de Pruebas Automatizadas (10/10 Casos Aprobados)
-Salida generada al ejecutar el comando `dotnet run --project backend/Boxly.Api -- --verify-suite`:
+### 7.2 Diagramas UML y Modelos Editables
+Los modelos y diagramas de arquitectura se encuentran alojados en la carpeta `diagramas/` en formatos editables (`.drawio`) y vectoriales (`.svg`):
+* Diagramas de actividades del MVP: `diagramas/hu-1-1-1-2-exploracion-catalogo.drawio`, `diagramas/hu-1-3-detalle-y-plan.drawio`, `diagramas/hu-3-1-prefacturacion.drawio`.
+* Herramienta recomendada para edición: [diagrams.net / Draw.io](https://app.diagrams.net).
+
+### 7.3 Evidencia de Ejecución de Flujos Principales y Alternativos del MVP
+Salida en consola de la ejecución de la suite de pruebas del backend mediante el comando:
+```bash
+dotnet run --project backend/Boxly.Api -- --verify-suite
+```
 
 ```text
 ======================================================================
@@ -273,7 +281,7 @@ Salida generada al ejecutar el comando `dotnet run --project backend/Boxly.Api -
   [PASS] Facade (RN-03: Pre-factura desglose plan + envío) -> Plan: $ 135.000 + Envío: $ 15.000 = Total: $ 150.000
 
 -- 2. VERIFICACIÓN DE FLUJOS PRINCIPALES Y ALTERNATIVOS (MVP) --
-  [PASS] Happy Path: Contratación y pago aprobado (RN-04: Estado pasa a Activa) -> Suscripción ID=7E74F492, Estado=Activa
+  [PASS] Happy Path: Contratación y pago aprobado (RN-04: Estado pasa a Activa) -> Suscripción ID=D9CBFA0A, Estado=Activa
   [PASS] Flujo Alternativo 1: Caja no existente rechazada controladamente (404) -> La caja temática solicitada ('caja-fantasma-no-existe') no fue encontrada en el sistema.
   [PASS] Flujo Alternativo 2: Pago declinado por entidad bancaria (RN-04: No activa, queda en PagoRechazado) -> Estado=PagoRechazado, Motivo='La entidad bancaria rechazó la transacción por fondos insuficientes o tarjeta no autorizada.'
   [PASS] Flujo Alternativo 3: Cancelación de suscripción activa por el usuario -> Estado actualizado a: Cancelada
@@ -282,7 +290,28 @@ Salida generada al ejecutar el comando `dotnet run --project backend/Boxly.Api -
 ----------------------------------------------------------------------
 RESULTADO FINAL: 10 Pruebas Exitosas | 0 Pruebas Fallidas
 ======================================================================
-``` 
+```
+
+### 7.4 Evidencia del Historial de Commits y Participación Individual (Jose Manuel Pulgarin)
+Trazabilidad verificable registrada en Git en la rama `rama-jose`:
+* `e0da48b`: *Preparación documentación entregable 3* (Reorganización de carpetas y corrección de rutas relativas).
+* `9d18ff1`: *feat(backend): inicializar proyecto Web API ASP.NET Core y modelos de dominio* (Modelos `Caja`, `Plan`, `Suscripcion`, DTOs).
+* `15a8a05`: *feat(backend): implementar servicios de dominio y patrones GoF (Factory, Facade, Builder, Observer, Strategy)*.
+* `988675a`: *feat(backend): implementar controladores REST con validaciones y manejo de flujos alternativos (400, 404, 422)*.
+* `60d4a16`: *feat(front): integrar interfaz de usuario con endpoints del backend y visualizacion de flujos alternativos*.
+* `512d11c`: *docs: documentar ejecucion de backend, catalogo de endpoints, flujos alternativos y anexos para E3*.
+
+### 7.5 Documentación Técnica Complementaria
+* **Plantilla GoF (diligenciada):** [Anexo_Plantilla_GoF.md](Anexo_Plantilla_GoF.md) — Análisis detallado de los 5 patrones GoF implementados y descarte de alternativas.
+* **Plantilla SOLID (diligenciada):** [Anexo_Plantilla_SOLID.md](Anexo_Plantilla_SOLID.md) — Aplicación de los 5 principios sobre componentes del sistema.
+* **Arquitectura de Software (C4 Model):** [Arquitectura C4.md](Arquitectura%20C4.md) — Niveles de Contexto, Contenedores, Componentes y Clases.
+
+### 7.6 Referencias Bibliográficas
+* Brown, S. (2018). *The C4 model for visualising software architecture*. https://c4model.com
+* Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley.
+* Martin, R. C. (2017). *Clean Architecture: A Craftsman's Guide to Software Structure and Design*. Prentice Hall.
+* Microsoft Learn (2026). *ASP.NET Core Web API documentation & Dependency Injection in .NET*. Microsoft Corporation.
+* Object Management Group (OMG) (2017). *Unified Modeling Language (UML) Specification Version 2.5.1*. Formal Standard. 
 
 # **Indicaciones generales** 
 
