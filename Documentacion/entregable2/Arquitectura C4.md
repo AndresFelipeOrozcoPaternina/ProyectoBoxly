@@ -226,25 +226,25 @@ Diagramas de actividades del flujo principal de las HU implementadas en el proto
 
 **Flujo:** El usuario abre el catálogo general, visualiza las cajas disponibles con precio y temática, aplica un filtro por categoría y, si encuentra la caja buscada, la selecciona para continuar con el detalle (HU-1.3); de lo contrario explora otra categoría.
 
-![HU-1.1 y HU-1.2 — Exploración del catálogo](diagramas/hu-1-1-1-2-exploracion-catalogo.svg)
+![HU-1.1 y HU-1.2 — Exploración del catálogo](../../diagramas/hu-1-1-1-2-exploracion-catalogo.svg)
 
-- Diagrama editable: [diagramas/hu-1-1-1-2-exploracion-catalogo.drawio](diagramas/hu-1-1-1-2-exploracion-catalogo.drawio)
+- Diagrama editable: [diagramas/hu-1-1-1-2-exploracion-catalogo.drawio](../../diagramas/hu-1-1-1-2-exploracion-catalogo.drawio)
 
 ### 5.2 HU-1.3 — Detalle de caja y selección de plan
 
 **Flujo:** Al seleccionar una caja se muestra su detalle (descripción e inclusión), se presentan los planes disponibles (Mensual / Semestral / Anual, RN-11), se calcula el valor con el descuento aplicado y el usuario decide si continuar con la suscripción hacia la pre-facturación o volver al catálogo.
 
-![HU-1.3 — Detalle y selección de plan](diagramas/hu-1-3-detalle-y-plan.svg)
+![HU-1.3 — Detalle y selección de plan](../../diagramas/hu-1-3-detalle-y-plan.svg)
 
-- Diagrama editable: [diagramas/hu-1-3-detalle-y-plan.drawio](diagramas/hu-1-3-detalle-y-plan.drawio)
+- Diagrama editable: [diagramas/hu-1-3-detalle-y-plan.drawio](../../diagramas/hu-1-3-detalle-y-plan.drawio)
 
 ### 5.3 HU-3.1 — Contratación y pre-facturación
 
 **Flujo:** Se valida la sesión del usuario (RN-01), se completa la dirección de envío, se elige el método de pago y se genera automáticamente la pre-factura con el valor del plan más el costo de envío (RN-03). Si el usuario confirma, se registra el pago pendiente de validación (RN-04), se activa la suscripción y la caja aparece como «Activa» en el panel Mis cajas; si no confirma, retorna al detalle de la caja.
 
-![HU-3.1 — Contratación y pre-facturación](diagramas/hu-3-1-prefacturacion.svg)
+![HU-3.1 — Contratación y pre-facturación](../../diagramas/hu-3-1-prefacturacion.svg)
 
-- Diagrama editable: [diagramas/hu-3-1-prefacturacion.drawio](diagramas/hu-3-1-prefacturacion.drawio)
+- Diagrama editable: [diagramas/hu-3-1-prefacturacion.drawio](../../diagramas/hu-3-1-prefacturacion.drawio)
 
 ---
 
@@ -315,10 +315,10 @@ Diagramas de actividades del flujo principal de las HU implementadas en el proto
     - Nivel 3: [https://drive.google.com/file/d/1Wj_FnWiLs7r8d934HXdMNLHSaJl7Y4nX/view?usp=sharing](https://drive.google.com/file/d/1Wj_FnWiLs7r8d934HXdMNLHSaJl7Y4nX/view?usp=sharing)
     - Nivel 4: [https://drive.google.com/file/d/1AreANCCpeeQavlo5JtFWH9gMfhxTZlkP/view?usp=sharing](https://drive.google.com/file/d/1AreANCCpeeQavlo5JtFWH9gMfhxTZlkP/view?usp=sharing)
 - **Diagramas de actividades editables (.drawio):**
-    - [HU-1.1 y HU-1.2 — Exploración del catálogo](diagramas/hu-1-1-1-2-exploracion-catalogo.drawio)
-    - [HU-1.3 — Detalle y selección de plan](diagramas/hu-1-3-detalle-y-plan.drawio)
-    - [HU-3.1 — Contratación y pre-facturación](diagramas/hu-3-1-prefacturacion.drawio)
-- **Plantilla de patrones GoF (diligenciada):** [Anexo_Plantilla_GoF.md](Anexo_Plantilla_GoF.md) — análisis de los 5 patrones seleccionados con tipo, definición, necesidad en el MVP, alternativas consideradas, aplicación concreta, roles UML y validación de no repetición, más el listado de patrones descartados del catálogo GoF. Formato basado en la infografía de referencia incluida en el repositorio ([Infografía de GoF.jpeg](Infografía de GoF.jpeg)).
+    - [HU-1.1 y HU-1.2 — Exploración del catálogo](../../diagramas/hu-1-1-1-2-exploracion-catalogo.drawio)
+    - [HU-1.3 — Detalle y selección de plan](../../diagramas/hu-1-3-detalle-y-plan.drawio)
+    - [HU-3.1 — Contratación y pre-facturación](../../diagramas/hu-3-1-prefacturacion.drawio)
+- **Plantilla de patrones GoF (diligenciada):** [Anexo_Plantilla_GoF.md](Anexo_Plantilla_GoF.md) — análisis de los 5 patrones seleccionados con tipo, definición, necesidad en el MVP, alternativas consideradas, aplicación concreta, roles UML y validación de no repetición, más el listado de patrones descartados del catálogo GoF. Formato basado en la infografía de referencia incluida en el repositorio ([Infografía de GoF.jpeg](Infografía%20de%20GoF.jpeg)).
 - **Plantilla de principios SOLID (diligenciada):** [Anexo_Plantilla_SOLID.md](Anexo_Plantilla_SOLID.md) — análisis de los 5 principios aplicados a componentes reales del modelo C4, con el problema previo del Entregable 1, el refinamiento del Entregable 2 y la trazabilidad a requisitos.
 - **Bibliografía y referencias:**
     - Brown, S. (2018). *The C4 model for visualising software architecture*. [https://c4model.com](https://c4model.com)

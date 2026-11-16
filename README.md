@@ -103,7 +103,10 @@ ProyectoBoxly/
 │   ├── login.html                     # Acceso al sistema
 │   └── registro.html                  # Registro de usuario
 ├── diagramas/                         # Diagramas de actividades (.drawio y .svg)
-├── Documentacion/                     # Entregables 1, 2 y 3 en Markdown y anexos GoF/SOLID
+├── Documentacion/                     # Documentación organizada por entregable
+│   ├── entregable1/                   # Entregable 1
+│   ├── entregable2/                   # Entregable 2, arquitectura C4, anexos e imágenes
+│   └── entregable3/                   # Entregable 3 y tablas de refinamiento
 ├── Imagenes/                          # Recursos gráficos locales
 └── README.md                          # Guía técnica y de ejecución
 ```
