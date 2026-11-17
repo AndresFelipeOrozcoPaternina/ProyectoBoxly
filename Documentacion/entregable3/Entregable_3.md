@@ -177,39 +177,41 @@ El servidor ASP.NET Core que aloja los controladores y servicios del diagrama de
 
 Esta separación permite que el backend aplique las validaciones de compra, calcule el cobro, registre los estados y responda con códigos HTTP sin depender de la presentación. El frontend puede seguir mostrando el prototipo si el API no está disponible, pero eso no convierte el almacenamiento local en persistencia del servidor. Las limitaciones descritas mantienen la arquitectura consistente con el código fuente actual y con los flujos que se pueden demostrar.
 
-# **4. Diagrama de secuencia** 
+# **4. Diagramas de secuencia**
 
-En esta sección, el equipo debe presentar diagramas de secuencia UML que representen las interacciones necesarias para ejecutar las funcionalidades principales del MVP. 
+El Entregable 1 organiza el alcance mediante requisitos de usuario (RU) y requisitos funcionales (RF), y no define una lista de épicas con ese nombre. Para presentar escenarios representativos del MVP, esta sección agrupa el catálogo dentro de RU-01 y la contratación dentro de RU-03, usando las HU identificadas en el Entregable 2. La agrupación es una convención de esta sección, no una afirmación de que el E1 haya definido épicas adicionales.
 
-Se debe elaborar al menos un diagrama por cada épica implementada, seleccionando un escenario representativo asociado a una historia de usuario o caso de uso. 
+## Épica 1 — Explorar catálogo y planes
 
-Cada diagrama debe evidenciar la comunicación entre los actores y los elementos de software involucrados, respetando las responsabilidades definidas en el diseño. 
+**Escenario:** filtrar el catálogo, abrir el detalle de una caja y comparar las opciones de plan.
 
-Cada diagrama debe incluir: 
+**Trazabilidad:** RU-01, RF-05 a RF-09; HU-1.1, HU-1.2 y HU-1.3 del Entregable 2.
 
-- Nombre del escenario, épica e historia de usuario o caso de uso asociado 
+![Secuencia del catálogo y detalle](../../diagramas/secuencia-epica-1-catalogo.svg)
 
-- Actor principal y participantes involucrados 
+Diagrama editable: [secuencia-epica-1-catalogo.drawio](../../diagramas/secuencia-epica-1-catalogo.drawio). Imagen: [secuencia-epica-1-catalogo.svg](../../diagramas/secuencia-epica-1-catalogo.svg).
 
-ENTREGABLE #3 DISEÑO DE SISTEMAS DE INFORMACIÓN 
+El usuario filtra las tarjetas disponibles. El manejador de `script.js` compara el atributo `data-category` de cada tarjeta con el filtro y modifica su visibilidad. Al seleccionar una caja, el script toma su `data-slug` y navega a `detalle.html` con ese valor en la URL. En la vista de detalle se consulta el objeto correspondiente en `CATALOGO`, se actualiza el DOM y se presenta su descripción e inclusiones. Cada cambio de plan vuelve a calcular el valor bruto, el descuento y el total, y actualiza el resumen.
 
-- Líneas de vida de los objetos, componentes o servicios 
+Esta secuencia es deliberadamente local: las vistas de catálogo y detalle usan los datos declarados en JavaScript y no llaman a `GET /api/cajas`. El endpoint está implementado en el backend, pero conectar estas vistas a ese endpoint está fuera de lo que hace el prototipo actual. El filtro repetible y la selección repetible de planes se representan con fragmentos `loop`.
 
-- Mensajes, llamadas y respuestas 
+## Épica 3 — Gestión de pre-facturación y contratación
 
-- Orden temporal de las interacciones 
+**Escenario:** confirmar una contratación con pago aprobado o gestionar las principales respuestas alternativas.
 
-- Fragmentos combinados alt, opt o loop, cuando corresponda 
+**Trazabilidad:** RU-03, RF-10 y RF-11, RN-03 y RN-04; HU-3.1 del Entregable 2.
 
-- Flujo principal y al menos un flujo alternativo o de excepción relevante 
+![Secuencia de contratación y flujos alternativos](../../diagramas/secuencia-epica-3-contratacion.svg)
 
-   - Imagen legible y enlace editable 
+Diagrama editable: [secuencia-epica-3-contratacion.drawio](../../diagramas/secuencia-epica-3-contratacion.drawio). Imagen: [secuencia-epica-3-contratacion.svg](../../diagramas/secuencia-epica-3-contratacion.svg).
 
-- Explicación técnica del comportamiento representado 
+El frontend verifica los campos del formulario y envía `POST /api/suscripciones`. El controlador valida el DTO y delega la operación a `SuscripcionService`. El servicio busca la caja y revisa el stock antes de solicitar a `FacturacionFacade` la liquidación de plan más envío; la fachada usa `PlanFactory` para obtener el plan y sus descuentos. Luego procesa el pago simulado.
 
-Los diagramas deben mantener coherencia con el diagrama de clases, los diagramas de componentes, las reglas de negocio y las funcionalidades implementadas. 
+El fragmento `alt` refleja las decisiones implementadas: datos inválidos producen HTTP 400; caja inexistente, HTTP 404; stock agotado, HTTP 409; y pago rechazado, HTTP 422. En este último caso el servicio guarda el estado `PagoRechazado` y notifica a los observadores, sin descontar stock ni guardar una compra activa en el almacenamiento local del navegador. Si el pago se aprueba, cambia el estado a `Activa`, descuenta stock, guarda la suscripción en el repositorio en memoria y notifica a los observadores; el controlador responde HTTP 201 y el frontend guarda el resumen en `localStorage` antes de navegar a `cajas.html`.
 
-**Importante** : No se aceptarán diagramas que únicamente representen la navegación entre pantallas. Se deben evidenciar las interacciones internas del sistema y las decisiones técnicas necesarias para ejecutar el escenario. 
+El almacenamiento de suscripciones del servidor es volátil y los observadores de correo y auditoría escriben logs; no se representa una base de datos ni el envío de correo real. Si la petición falla por una excepción de red, el `catch` del frontend activa el respaldo local existente. Por ello, dicho respaldo no demuestra que el servidor haya registrado o cobrado la suscripción.
+
+Los dos diagramas muestran interacciones entre responsabilidades de software y no solo navegación visual. Sus participantes y límites corresponden al [diagrama de componentes](../../diagramas/arquitectura-componentes.svg), al [diagrama de despliegue](../../diagramas/arquitectura-despliegue.svg) y al comportamiento descrito en las secciones anteriores.
 
 # **5. MVP funcional con flujos alternativos (Backend)**
 
@@ -293,7 +295,7 @@ A continuación se registra el cumplimiento del requisito de commits significati
 |---|---|:---:|---|
 | **Jose Manuel Pulgarin Rueda** | `rama-jose` | 6 | • Reestructuración modular del repositorio y corrección de rutas relativas.<br>• Creación de la solución ASP.NET Core Web API y modelos de dominio.<br>• Implementación de patrones GoF (*Factory Method*, *Builder*, *Strategy*, *Observer*, *Facade*) y principios SOLID.<br>• Implementación de controladores REST con manejo de flujos alternativos (400, 404, 409, 422).<br>• Integración frontend <-> backend en JavaScript con manejo de errores en pantalla.<br>• Documentación técnica completa en README.md y Entregable 3. |
 | **Andrés Felipe Orozco Paternina** | `feature/estados-refinamiento` | 5 | • Diligenciamiento de la Sección 1 (Tabla de consolidación y refinamiento E1/E2).<br>• Matriz de análisis de la máquina de estados UML.<br>• Elaboración del diagrama editable `.drawio` de la máquina de estados.<br>• Exportación y vinculación del diagrama vectorial.<br>• Justificación técnica de transiciones y correspondencia con reglas de negocio. |
-| **Juan David Restrepo Alvarez** / **Jesús David Ávila Arrieta** | `feature/componentes-secuencia` | 5 | • Diseño de diagramas UML de Componentes y Despliegue en `.drawio`.<br>• Redacción de la justificación arquitectónica y correspondencia con el modelo C4.<br>• Elaboración de diagramas de secuencia de flujos principales y fragmentos `alt`/`loop`.<br>• Documentación técnica de interacciones entre servicios y base de datos.<br>• Consolidación final de anexos gráficos. |
+| **Juan David Restrepo Alvarez** / **Jesús David Ávila Arrieta** | `feature/componentes-secuencia` | 5 | • Diseño de diagramas UML de Componentes y Despliegue en `.drawio`.<br>• Redacción de la justificación arquitectónica y correspondencia con el modelo C4.<br>• Elaboración de secuencias para RU-01 (catálogo local) y RU-03 (contratación), con fragmentos `alt`/`loop`.<br>• Documentación de las interacciones reales entre frontend, API, servicio, fachada, fábrica, repositorios en memoria y observadores.<br>• Vinculación de imágenes y fuentes editables de los diagramas en el Entregable 3. |
 
 ---
 
