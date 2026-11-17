@@ -26,7 +26,7 @@
   <rect class="pattern" x="625" y="355" width="250" height="95" rx="9"/>
   <text class="label" x="640" y="385">Facade + Factory Method</text><text class="body" x="640" y="408">Prefactura, pago simulado</text><text class="body" x="640" y="428">y cálculo de planes</text>
   <rect class="pattern" x="625" y="490" width="250" height="95" rx="9"/>
-  <text class="label" x="640" y="520">Builder + Strategy</text><text class="body" x="640" y="543">Construcción de cajas y</text><text class="body" x="640" y="563">asignación por afinidad</text>
+  <text class="label" x="640" y="520">Builder + Strategy</text><text class="body" x="640" y="543">Builder construye cajas.</text><text class="body" x="640" y="563">Strategy se inyecta, no se invoca.</text>
   <rect class="pattern" x="935" y="355" width="300" height="125" rx="9"/>
   <text class="label" x="950" y="385">Observer</text><text class="body" x="950" y="408">ISuscripcionNotifier</text><text class="body" x="950" y="428">Observadores de correo y</text><text class="body" x="950" y="448">auditoría: logs simulados</text>
   <path class="edge" d="M165 270 L165 306"/><text class="edgeText" x="177" y="294">presenta</text>
@@ -35,7 +35,7 @@
   <path class="edge" d="M880 220 L935 220"/><text class="edgeText" x="881" y="198">invoca interfaz</text>
   <path class="edge" d="M730 277 L730 350"/><text class="edgeText" x="740" y="320">orquesta</text>
   <path class="edge" d="M935 250 L820 350"/><text class="edgeText" x="849" y="300">IFacturacionFacade</text>
-  <path class="edge" d="M935 260 L845 490"/><text class="edgeText" x="864" y="390">IAsignacionStrategy</text>
+  <path class="edge" d="M935 260 L845 490" stroke-dasharray="6 5"/><text class="edgeText" x="864" y="390">IAsignacionStrategy · DI, no invocada</text>
   <path class="edge" d="M935 270 L1080 350"/><text class="edgeText" x="1067" y="310">notifica</text>
   <path class="edge" d="M625 405 L585 405"/><text class="edgeText" x="565" y="390">consulta caja</text>
   <path class="edge" d="M935 265 L585 440"/><text class="edgeText" x="720" y="460">ISuscripcionRepository</text>
