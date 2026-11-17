@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#475569"/></marker>
+    <style>
+      text{font-family:Arial,sans-serif;fill:#172554}.title{font-size:25px;font-weight:bold}.boundary{fill:#f8fafc;stroke:#64748b;stroke-width:2}.front{fill:#eff6ff;stroke:#60a5fa;stroke-width:2}.box{fill:#fff;stroke:#7c3aed;stroke-width:2}.pattern{fill:#fff7ed;stroke:#f97316;stroke-width:2}.repo{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.label{font-size:16px;font-weight:bold}.body{font-size:13px}.edge{fill:none;stroke:#475569;stroke-width:2;marker-end:url(#arrow)}.edgeText{font-size:12px;fill:#334155}.note{fill:#fef2f2;stroke:#ef4444;stroke-width:1.5}
+    </style>
+  </defs>
+  <rect width="1400" height="820" fill="#fff"/>
+  <text class="title" x="30" y="48">BOXLY — Diagrama de componentes (MVP implementado)</text>
+  <rect class="front" x="30" y="100" width="270" height="390" rx="14"/>
+  <text class="label" x="48" y="132">FRONTEND WEB</text><text class="body" x="48" y="153">HTML / CSS / JavaScript</text>
+  <rect class="box" x="55" y="180" width="220" height="90" rx="9"/>
+  <text class="label" x="70" y="210">Vistas HTML</text><text class="body" x="70" y="233">Catálogo, detalle, checkout</text><text class="body" x="70" y="252">y panel Mis cajas</text>
+  <rect class="box" x="55" y="310" width="220" height="130" rx="9"/>
+  <text class="label" x="70" y="340">script.js</text><text class="body" x="70" y="363">Eventos, CATALOGO local,</text><text class="body" x="70" y="383">localStorage y fetch para</text><text class="body" x="70" y="403">contratar / cancelar</text>
+  <rect class="boundary" x="330" y="100" width="1040" height="650" rx="14"/>
+  <text class="label" x="350" y="132">BACKEND — ASP.NET CORE WEB API (.NET 10)</text>
+  <rect class="repo" x="355" y="170" width="205" height="86" rx="9"/>
+  <text class="label" x="370" y="200">Program.cs / DI</text><text class="body" x="370" y="223">CORS, JSON y composición</text>
+  <rect class="box" x="605" y="165" width="275" height="112" rx="9"/>
+  <text class="label" x="620" y="193">Controladores REST</text><text class="body" x="620" y="215">CajasController y</text><text class="body" x="620" y="234">SuscripcionesController</text><text class="body" x="620" y="253">/api/cajas · /api/suscripciones</text>
+  <rect class="box" x="935" y="165" width="300" height="112" rx="9"/>
+  <text class="label" x="950" y="193">SuscripcionService</text><text class="body" x="950" y="215">ISuscripcionService</text><text class="body" x="950" y="234">Validación y orquestación</text><text class="body" x="950" y="253">de contratación / cancelación</text>
+  <rect class="repo" x="355" y="355" width="230" height="125" rx="9"/>
+  <text class="label" x="370" y="385">Repositorios en memoria</text><text class="body" x="370" y="408">ICajaRepository</text><text class="body" x="370" y="428">ISuscripcionRepository</text><text class="body" x="370" y="451">Datos volátiles</text>
+  <rect class="pattern" x="625" y="355" width="250" height="95" rx="9"/>
+  <text class="label" x="640" y="385">Facade + Factory Method</text><text class="body" x="640" y="408">Prefactura, pago simulado</text><text class="body" x="640" y="428">y cálculo de planes</text>
+  <rect class="pattern" x="625" y="490" width="250" height="95" rx="9"/>
+  <text class="label" x="640" y="520">Builder + Strategy</text><text class="body" x="640" y="543">Builder construye cajas.</text><text class="body" x="640" y="563">Strategy se inyecta, no se invoca.</text>
+  <rect class="pattern" x="935" y="355" width="300" height="125" rx="9"/>
+  <text class="label" x="950" y="385">Observer</text><text class="body" x="950" y="408">ISuscripcionNotifier</text><text class="body" x="950" y="428">Observadores de correo y</text><text class="body" x="950" y="448">auditoría: logs simulados</text>
+  <path class="edge" d="M165 270 L165 306"/><text class="edgeText" x="177" y="294">presenta</text>
+  <path class="edge" d="M275 375 L605 225"/><text class="edgeText" x="385" y="285">HTTP / JSON · POST</text>
+  <path class="edge" d="M560 213 L605 213"/><text class="edgeText" x="558" y="190">DI / CORS</text>
+  <path class="edge" d="M880 220 L935 220"/><text class="edgeText" x="881" y="198">invoca interfaz</text>
+  <path class="edge" d="M730 277 L730 350"/><text class="edgeText" x="740" y="320">orquesta</text>
+  <path class="edge" d="M935 250 L820 350"/><text class="edgeText" x="849" y="300">IFacturacionFacade</text>
+  <path class="edge" d="M935 260 L845 490" stroke-dasharray="6 5"/><text class="edgeText" x="864" y="390">IAsignacionStrategy · DI, no invocada</text>
+  <path class="edge" d="M935 270 L1080 350"/><text class="edgeText" x="1067" y="310">notifica</text>
+  <path class="edge" d="M625 405 L585 405"/><text class="edgeText" x="565" y="390">consulta caja</text>
+  <path class="edge" d="M935 265 L585 440"/><text class="edgeText" x="720" y="460">ISuscripcionRepository</text>
+  <path class="edge" d="M480 355 L480 260"/><text class="edgeText" x="490" y="328">lee catálogo</text>
+  <rect class="note" x="30" y="530" width="270" height="195" rx="10"/>
+  <text class="label" x="48" y="560">Alcance y precisión</text>
+  <text class="body" x="48" y="586">El catálogo del frontend está</text><text class="body" x="48" y="606">definido en CATALOGO local.</text>
+  <text class="body" x="48" y="632">GET /api/cajas existe, pero</text><text class="body" x="48" y="652">aún no está conectado a la UI.</text>
+  <text class="body" x="48" y="678">No hay BD ni servicios reales</text><text class="body" x="48" y="698">de correo o pasarela de pago.</text>
+</svg>
