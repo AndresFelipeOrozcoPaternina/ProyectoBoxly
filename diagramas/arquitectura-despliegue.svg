@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#475569"/></marker>
+    <style>
+      text{font-family:Arial,sans-serif;fill:#172554}.title{font-size:25px;font-weight:bold}.node{fill:#f8fafc;stroke:#64748b;stroke-width:2}.browser{fill:#eff6ff;stroke:#60a5fa;stroke-width:2}.server{fill:#f0fdf4;stroke:#22c55e;stroke-width:2}.api{fill:#f5f3ff;stroke:#8b5cf6;stroke-width:2}.artifact{fill:#fff;stroke:#64748b;stroke-width:1.7}.repo{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.label{font-size:17px;font-weight:bold}.body{font-size:14px}.edge{fill:none;stroke:#475569;stroke-width:2;marker-end:url(#arrow)}.edgeText{font-size:13px;fill:#334155}.note{fill:#fef2f2;stroke:#ef4444;stroke-width:1.5}
+    </style>
+  </defs>
+  <rect width="1400" height="820" fill="#fff"/>
+  <text class="title" x="30" y="48">BOXLY — Diagrama de despliegue (entorno local del MVP)</text>
+  <rect class="node" x="30" y="100" width="1340" height="650" rx="15"/>
+  <text class="label" x="55" y="135">Equipo de desarrollo / demostración</text>
+  <rect class="browser" x="65" y="175" width="330" height="270" rx="12"/>
+  <text class="label" x="85" y="210">&lt;&lt;device&gt;&gt; Navegador web</text>
+  <rect class="artifact" x="90" y="235" width="280" height="155" rx="8"/>
+  <text class="label" x="110" y="267">&lt;&lt;artifact&gt;&gt;</text><text class="body" x="110" y="292">front/*.html</text><text class="body" x="110" y="315">front/css/estilos.css</text><text class="body" x="110" y="338">front/js/script.js</text><text class="body" x="110" y="361">localStorage del navegador</text>
+  <rect class="server" x="465" y="175" width="350" height="270" rx="12"/>
+  <text class="label" x="485" y="210">&lt;&lt;executionEnvironment&gt;&gt;</text><text class="body" x="485" y="232">Servidor estático local (opcional)</text>
+  <rect class="artifact" x="495" y="255" width="290" height="140" rx="8"/>
+  <text class="label" x="515" y="287">&lt;&lt;artifact&gt;&gt; Carpeta front/</text><text class="body" x="515" y="316">Live Server / HTTP local</text><text class="body" x="515" y="339">Entrega páginas al navegador</text><text class="body" x="515" y="366">Puerto depende de la herramienta</text>
+  <rect class="api" x="885" y="175" width="445" height="440" rx="12"/>
+  <text class="label" x="905" y="210">&lt;&lt;executionEnvironment&gt;&gt;</text><text class="body" x="905" y="232">Proceso ASP.NET Core (.NET 10)</text>
+  <rect class="artifact" x="915" y="255" width="385" height="135" rx="8"/>
+  <text class="label" x="935" y="285">&lt;&lt;artifact&gt;&gt; Boxly.Api.dll</text><text class="body" x="935" y="311">Kestrel · http://localhost:5000</text><text class="body" x="935" y="335">Controladores, servicios y DI</text><text class="body" x="935" y="359">JSON y CORS habilitados</text>
+  <rect class="repo" x="915" y="430" width="385" height="135" rx="8"/>
+  <text class="label" x="935" y="462">&lt;&lt;component&gt;&gt; Repositorios</text><text class="body" x="935" y="489">InMemoryCajaRepository</text><text class="body" x="935" y="512">InMemorySuscripcionRepository</text><text class="body" x="935" y="539">Datos volátiles en memoria del proceso</text>
+  <path class="edge" d="M495 325 L375 325"/><text class="edgeText" x="395" y="308">HTTP: entrega del frontend</text>
+  <path class="edge" d="M370 375 L915 340"/><text class="edgeText" x="560" y="370">HTTP / JSON · POST contratar / cancelar</text>
+  <path class="edge" d="M1105 390 L1105 426"/><text class="edgeText" x="1118" y="415">acceso en proceso</text>
+  <rect class="note" x="65" y="500" width="750" height="140" rx="10"/>
+  <text class="label" x="90" y="535">Límites del despliegue representado</text>
+  <text class="body" x="90" y="565">No hay PostgreSQL, AWS S3, SMTP ni pasarela bancaria real desplegados.</text>
+  <text class="body" x="90" y="590">El pago se simula en la API; los observadores de correo y auditoría solo escriben logs.</text>
+  <text class="body" x="90" y="615">El CORS permisivo de desarrollo permite el origen del frontend.</text>
+</svg>

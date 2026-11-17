@@ -145,57 +145,37 @@ Se documento el codigo existente, sin modificar el backend ni agregar propuestas
 Se revisaron la estructura XML del archivo editable, las referencias de sus conectores y los enlaces locales del documento. Esta tarea no agrega pruebas ni constituye una nueva ejecucion del MVP. Los textos de este documento y del diagrama estan escritos sin tildes.
 
 
-# **3. Diagrama integrado de componentes y despliegue** 
+# **3. Diagrama integrado de componentes y despliegue**
 
-En esta sección, el equipo debe presentar los diagramas UML de componentes y despliegue que permitan comprender la organización estructural del software y la infraestructura donde se ejecuta el MVP. 
+Los diagramas muestran dos vistas complementarias de la arquitectura que está implementada en el MVP. Se distinguen las capacidades presentes en el código de las propuestas de infraestructura del Entregable 2 que todavía no se han construido.
 
-Ambos diagramas deben representar vistas complementarias de una misma arquitectura, manteniendo coherencia entre los componentes definidos, sus dependencias y los entornos de ejecución. 
+## Diagrama de componentes
 
-# **Diagrama de Componentes** 
+![Diagrama UML de componentes de Boxly](../../diagramas/arquitectura-componentes.svg)
 
-ENTREGABLE #3 DISEÑO DE SISTEMAS DE INFORMACIÓN 
+Archivo editable: [arquitectura-componentes.drawio](../../diagramas/arquitectura-componentes.drawio). Imagen: [arquitectura-componentes.svg](../../diagramas/arquitectura-componentes.svg).
 
-Debe representar la organización modular de la solución e incluir, según corresponda: 
+La interfaz web se compone de páginas HTML, estilos compartidos y `script.js`. El script presenta el catálogo que mantiene en la constante `CATALOGO`, conserva localmente las suscripciones confirmadas y envía al backend las operaciones de contratación y cancelación. El backend expone controladores REST; `SuscripcionesController` delega las reglas del ciclo de vida en `SuscripcionService`, mientras que `CajasController` permite consultar las cajas y cotizar. El servicio coordina los repositorios, la fachada de facturación y las notificaciones de cambios de estado.
 
-- Componentes principales del sistema y sus responsabilidades 
+Las interfaces (`ISuscripcionService`, `ICajaRepository`, `ISuscripcionRepository`, `IFacturacionFacade`, `IPlanFactory` e `ISuscripcionNotifier`) explicitan las dependencias entre módulos y se conectan mediante inyección de dependencias en `Program.cs`. `CajaBuilder` construye las cajas del catálogo y `PlanFactory` calcula las variantes de plan usadas por la fachada. `IAsignacionStrategy` está registrada e inyectada, pero el flujo actual de contratación no la invoca; el diagrama la marca como dependencia configurada, no como comportamiento ejecutado. Los observadores de correo y auditoría registran mensajes en logs, no envían notificaciones externas.
 
-- Módulos, servicios o subsistemas 
+Una diferencia relevante frente a la arquitectura propuesta en E2 es que el navegador todavía no consulta el endpoint `GET /api/cajas`: el listado, filtros y detalle mostrados por el frontend provienen del catálogo JavaScript local. Los endpoints de catálogo están implementados en el API, pero su integración con esas vistas queda pendiente. El checkout sí envía la contratación al API y `Mis cajas` intenta enviar la cancelación.
 
-   - Interfaces proporcionadas y requeridas 
+## Diagrama de despliegue
 
-- Dependencias y mecanismos de comunicación 
+![Diagrama UML de despliegue local de Boxly](../../diagramas/arquitectura-despliegue.svg)
 
-- Relación entre los componentes y las funcionalidades del MVP 
+Archivo editable: [arquitectura-despliegue.drawio](../../diagramas/arquitectura-despliegue.drawio). Imagen: [arquitectura-despliegue.svg](../../diagramas/arquitectura-despliegue.svg).
 
-# **Diagrama de despliegue** 
+Para la demostración, el navegador carga `front/` desde un servidor HTTP estático local (por ejemplo, Live Server) y se comunica por HTTP/JSON con el proceso ASP.NET Core. El frontend configura `API_BASE_URL` como `http://localhost:5000/api`; por eso, al seguir el comando del README, la API se inicia con `--urls "http://localhost:5000"`. El CORS del backend permite la comunicación entre esos orígenes locales. El puerto del servidor estático depende de la herramienta y no forma parte del contrato del API.
 
-Debe representar la distribución de los artefactos de software en la infraestructura e incluir, según corresponda: 
+Los repositorios actuales mantienen cajas y suscripciones en memoria dentro del proceso de la API. No existe una base de datos configurada y los registros se pierden al reiniciar el proceso. Tampoco se despliegan AWS S3, SMTP ni una pasarela bancaria: el procesamiento de pago se simula en `FacturacionFacade` y los avisos se limitan a logs. PostgreSQL y servicios externos que aparecen en la arquitectura objetivo de E2 son elementos proyectados, no nodos del MVP desplegado.
 
-- Nodos de ejecución y entornos de ejecución 
+## Correspondencia entre vistas y alcance
 
-- Dispositivos, servidores, contenedores o servicios en la nube 
+El servidor ASP.NET Core que aloja los controladores y servicios del diagrama de componentes corresponde al nodo de ejecución `Boxly.Api.dll` del despliegue. Los repositorios que esos componentes requieren están dentro del mismo proceso; no se dibuja un nodo de base de datos separado porque aún no hay persistencia externa. El navegador ejecuta las vistas y `script.js`, y obtiene los archivos del servidor estático local.
 
-- Artefactos de software desplegados 
-
-- Base de datos y servicios externos 
-
-- Conexiones y protocolos de comunicación 
-
-- Relación entre los artefactos desplegados y los componentes definidos 
-
-# El equipo debe entregar: 
-
-- Imagen legible de cada diagrama 
-
-- Enlace editable de cada diagrama 
-
-- Explicación técnica de las decisiones arquitectónicas 
-
-- Descripción de la correspondencia entre los componentes y su despliegue 
-
-- Justificación de cómo la arquitectura soporta las funcionalidades implementadas en el MVP 
-
-**Importante:** Ambos diagramas deben ser consistentes con el modelo C4 presentado en el Entregable No. 2 y con la estructura real del código fuente. No se deben representar componentes, servicios o tecnologías que no formen parte del MVP sin identificarlos expresamente como elementos proyectados. 
+Esta separación permite que el backend aplique las validaciones de compra, calcule el cobro, registre los estados y responda con códigos HTTP sin depender de la presentación. El frontend puede seguir mostrando el prototipo si el API no está disponible, pero eso no convierte el almacenamiento local en persistencia del servidor. Las limitaciones descritas mantienen la arquitectura consistente con el código fuente actual y con los flujos que se pueden demostrar.
 
 # **4. Diagrama de secuencia** 
 
@@ -233,7 +213,7 @@ Los diagramas deben mantener coherencia con el diagrama de clases, los diagramas
 
 # **5. MVP funcional con flujos alternativos (Backend)**
 
-En este entregable se presenta la evolución del MVP desde el prototipo estático del Entregable No. 2 hacia una **solución cliente-servidor completa y desacoplada**, incorporando una **API RESTful desarrollada en ASP.NET Core (.NET 10 / C#)** que implementa persistencia, validaciones de dominio, ejecución de reglas de negocio y un manejo exhaustivo de flujos principales y alternativos.
+En este entregable se presenta la evolución del MVP desde el prototipo estático del Entregable No. 2 hacia una **solución cliente-servidor para el flujo de contratación**, incorporando una **API RESTful desarrollada en ASP.NET Core (.NET 10 / C#)** que ejecuta validaciones de dominio y reglas de negocio y maneja flujos principales y alternativos. Los repositorios actuales mantienen los datos en memoria; no hay persistencia externa.
 
 ### 5.1 Tecnologías Utilizadas y Arquitectura del Backend
 
@@ -382,4 +362,3 @@ Durante la sustentación, cada integrante deberá demostrar conocimiento de los 
 El uso de herramientas de inteligencia artificial deberá declararse y no sustituye la responsabilidad del equipo sobre el análisis, diseño e implementación. Se evaluará la capacidad para identificar inconsistencias, argumentar decisiones y demostrar correspondencia entre los modelos y el sistema implementado. 
 
 Cada equipo dispondrá de 15 minutos para presentar y sustentar el Entregable No. 3, demostrando la coherencia entre los modelos UML, las decisiones arquitectónicas y el MVP implementado. 
-
