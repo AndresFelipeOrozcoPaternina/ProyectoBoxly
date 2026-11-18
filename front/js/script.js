@@ -340,9 +340,20 @@ function initFacturacion() {
             const ciudad = document.getElementById('ciudad')?.value?.trim() || 'Medellín';
             const telefono = document.getElementById('telefono')?.value?.trim() || '3001234567';
             const metodoPago = document.querySelector('input[name="metodoPago"]:checked')?.value || 'tarjeta';
-            const numeroTarjeta = document.getElementById('numeroTarjeta')?.value?.trim() || '';
-            const cvv = document.getElementById('cvv')?.value?.trim() || '';
-            const fechaVencimiento = document.getElementById('fechaVencimiento')?.value?.trim() || '';
+            const numeroTarjeta = (document.getElementById('numeroTarjeta')?.value || '').trim();
+            const cvv = (document.getElementById('cvv')?.value || '').trim();
+            const fechaVencimiento = (document.getElementById('fechaVencimiento')?.value || '').trim();
+
+            const tarjetaLimpia = numeroTarjeta.replace(/[\s-]/g, '');
+
+            // Regla de simulación de fondos insuficientes (Flujo Alternativo 422 - RN-04)
+            // Se activa si la tarjeta termina en 0000 o el CVC/CVV es 000, 0000 o 999
+            const esRechazoSimulado = metodoPago === 'tarjeta' && (
+                tarjetaLimpia.endsWith('0000') ||
+                cvv === '000' ||
+                cvv === '0000' ||
+                cvv === '999'
+            );
 
             const planEnumMap = {
                 mensual: 'Mensual',
@@ -422,8 +433,27 @@ function initFacturacion() {
                     alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             } catch (error) {
-                // Modo resiliente offline si el backend no está corriendo en localhost:5000
-                console.warn('Backend offline, ejecutando guardado local de respaldo.', error);
+                console.warn('Backend offline o no disponible en http://localhost:5000.', error);
+
+                if (esRechazoSimulado) {
+                    // Si el usuario ingresó CVC en 000 o tarjeta 0000, SIMULAR EL RECHAZO BANCARIO (422) INCLUSO OFFLINE
+                    if (alerta) {
+                        alerta.className = 'alerta-mensaje';
+                        alerta.style.display = 'block';
+                        alerta.style.background = '#fef2f2';
+                        alerta.style.color = '#991b1b';
+                        alerta.style.border = '1px solid #f87171';
+                        alerta.innerHTML = `<strong>⚠️ Flujo Alternativo 422 — Transacción Declinada por Entidad Bancaria:</strong> Fondos insuficientes o tarjeta declinada (CVC <strong>${cvv || '000'}</strong>).<br><small style="margin-top:6px;display:block;">Conforme a la regla de negocio <strong>RN-04</strong>, la suscripción no fue activada.</small>`;
+                        alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    if (btnSubmit) {
+                        btnSubmit.disabled = false;
+                        btnSubmit.textContent = textoOriginal;
+                    }
+                    return;
+                }
+
+                // Si los datos son válidos, proceder con el Happy Path local de respaldo
                 guardarSuscripcion({
                     id: Date.now(),
                     slug: CATALOGO[slug] ? slug : 'gamer-ultimate',
@@ -513,13 +543,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = card.dataset.description || 'Sin descripción disponible.';
         const price = card.dataset.price || 'Precio no disponible';
         const image = card.querySelector('img')?.src || '';
+        const isInactive = card.dataset.status === 'inactive';
 
         modalTitle.textContent = title;
         modalDescription.textContent = description;
         modalPrice.textContent = price;
         modalImage.src = image;
         modalImage.alt = title;
-        modal.dataset.subscriptionId = card.dataset.id || '';
+
+        const subId = card.dataset.id || card.dataset.title || 'SUB-001';
+        modal.dataset.subscriptionId = subId;
+        modal._activeCard = card;
+
+        if (cancelBtn) {
+            if (isInactive) {
+                cancelBtn.disabled = true;
+                cancelBtn.textContent = 'Suscripción ya cancelada (Inactiva)';
+                cancelBtn.style.background = '#94a3b8';
+                cancelBtn.style.cursor = 'not-allowed';
+            } else {
+                cancelBtn.disabled = false;
+                cancelBtn.textContent = 'Cancelar suscripción';
+                cancelBtn.style.background = '#ef4444';
+                cancelBtn.style.cursor = 'pointer';
+            }
+        }
+
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
     };
@@ -527,36 +576,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelBtn = modal?.querySelector('.cancel-btn');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', async () => {
-            const subId = modal.dataset.subscriptionId;
-            if (!subId) {
+            const subId = modal.dataset.subscriptionId || 'SUB-001';
+            const targetCard = modal._activeCard || document.querySelector(`.subscription-card[data-id="${subId}"]`);
+
+            if (targetCard && targetCard.dataset.status === 'inactive') {
                 closeModal();
                 return;
             }
 
-            if (!confirm(`¿Estás seguro de que deseas cancelar la suscripción ${subId}? (Flujo alternativo)`)) {
-                return;
-            }
+            cancelBtn.disabled = true;
+            cancelBtn.textContent = 'Cancelando en el sistema...';
 
+            // 1. Notificar al backend si está disponible (Flujo Alternativo del Backend)
             try {
                 await fetch(`${API_BASE_URL}/suscripciones/${encodeURIComponent(subId)}/cancelar`, {
                     method: 'POST'
                 });
             } catch (err) {
-                console.warn('Backend offline, cancelando suscripción en modo local.', err);
+                console.warn('Backend offline o no disponible, ejecutando cancelación en modo cliente.', err);
             }
 
-            // Actualizar tarjeta en el DOM
-            const targetCard = document.querySelector(`.subscription-card[data-id="${subId}"]`);
+            // 2. Actualizar visualmente la tarjeta en el DOM
             if (targetCard) {
                 targetCard.dataset.status = 'inactive';
                 const statusBadge = targetCard.querySelector('.status');
                 if (statusBadge) {
                     statusBadge.className = 'status inactive';
-                    statusBadge.textContent = 'Cancelada';
+                    statusBadge.textContent = 'Inactiva';
                 }
             }
 
-            // Actualizar en localStorage
+            // 3. Actualizar en localStorage si es una suscripción guardada
             const guardadas = obtenerSuscripcionesGuardadas();
             const idx = guardadas.findIndex(s => String(s.id) === String(subId));
             if (idx >= 0) {
@@ -564,9 +614,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem(ALMACEN_SUSCRIPCIONES, JSON.stringify(guardadas));
             }
 
+            // 4. Actualizar contadores de las píldoras de filtro (Todas, Activas, Inactivas)
             updateSubscriptionFilterCounts();
+
+            // 5. Cerrar el modal
             closeModal();
-            alert(`Suscripción ${subId} cancelada exitosamente en el sistema.`);
+
+            // 6. Mostrar el banner de cancelación en la parte superior
+            const cancelBanner = document.getElementById('cancelBanner');
+            if (cancelBanner) {
+                cancelBanner.style.display = 'block';
+                cancelBanner.classList.remove('hidden');
+                const nombreCaja = targetCard?.dataset.title || subId;
+                cancelBanner.innerHTML = `⚠️ <strong>Flujo Alternativo de Ciclo de Vida:</strong> La suscripción a <strong>${nombreCaja}</strong> (${subId}) fue cancelada exitosamente. Su estado cambió a <em>Inactiva</em>.`;
+                cancelBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            const exitoBanner = document.getElementById('exitoBanner');
+            if (exitoBanner) {
+                exitoBanner.classList.add('hidden');
+            }
         });
     }
 
