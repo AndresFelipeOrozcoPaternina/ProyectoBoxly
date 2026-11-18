@@ -101,10 +101,41 @@ function obtenerSuscripcionesGuardadas() {
     }
 }
 
+function obtenerCanceladas() {
+    try {
+        const datos = JSON.parse(localStorage.getItem('boxly_canceladas') || '[]');
+        return Array.isArray(datos) ? datos : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function registrarCancelada(idOrTitle) {
+    if (!idOrTitle) return;
+    const canceladas = obtenerCanceladas();
+    const str = String(idOrTitle).trim();
+    if (!canceladas.includes(str)) {
+        canceladas.push(str);
+        localStorage.setItem('boxly_canceladas', JSON.stringify(canceladas));
+    }
+}
+
+function limpiarCancelada(idOrTitle) {
+    if (!idOrTitle) return;
+    const str = String(idOrTitle).trim();
+    const canceladas = obtenerCanceladas().filter(c => c !== str);
+    localStorage.setItem('boxly_canceladas', JSON.stringify(canceladas));
+}
+
 function guardarSuscripcion(suscripcion) {
     const suscripciones = obtenerSuscripcionesGuardadas();
     suscripciones.push(suscripcion);
     localStorage.setItem(ALMACEN_SUSCRIPCIONES, JSON.stringify(suscripciones));
+
+    // Si estaba cancelada previamente, rehabilitarla
+    if (suscripcion.id) limpiarCancelada(suscripcion.id);
+    if (suscripcion.nombre) limpiarCancelada(suscripcion.nombre);
+    if (suscripcion.slug) limpiarCancelada(suscripcion.slug);
 }
 
 function updateSubscriptionFilterCounts() {
@@ -180,19 +211,45 @@ function crearTarjetaSuscripcion(suscripcion) {
     return article;
 }
 
+function aplicarCanceladas() {
+    const canceladas = obtenerCanceladas();
+    if (!canceladas.length) return;
+
+    const cards = document.querySelectorAll('.subscription-card');
+    cards.forEach((card) => {
+        const id = card.dataset.id;
+        const title = card.dataset.title;
+        if ((id && canceladas.includes(String(id))) || (title && canceladas.includes(title))) {
+            card.remove();
+        }
+    });
+}
+
 function inyectarSuscripcionesGuardadas() {
     const grid = document.querySelector('.subscriptions-grid');
     if (!grid) {
         return;
     }
 
+    const canceladas = obtenerCanceladas();
     const suscripciones = obtenerSuscripcionesGuardadas();
     suscripciones.forEach((suscripcion) => {
         if (!suscripcion || !suscripcion.nombre) {
             return;
         }
+        if (canceladas.includes(String(suscripcion.id)) || canceladas.includes(suscripcion.nombre) || (suscripcion.slug && canceladas.includes(suscripcion.slug))) {
+            return;
+        }
+        const existe = Array.from(grid.querySelectorAll('.subscription-card')).some(
+            c => c.dataset.title === suscripcion.nombre
+        );
+        if (existe) {
+            return;
+        }
         grid.appendChild(crearTarjetaSuscripcion(suscripcion));
     });
+
+    aplicarCanceladas();
 }
 
 function initDetalleCaja() {
@@ -340,9 +397,22 @@ function initFacturacion() {
             const ciudad = document.getElementById('ciudad')?.value?.trim() || 'Medellín';
             const telefono = document.getElementById('telefono')?.value?.trim() || '3001234567';
             const metodoPago = document.querySelector('input[name="metodoPago"]:checked')?.value || 'tarjeta';
-            const numeroTarjeta = document.getElementById('numeroTarjeta')?.value?.trim() || '';
-            const cvv = document.getElementById('cvv')?.value?.trim() || '';
-            const fechaVencimiento = document.getElementById('fechaVencimiento')?.value?.trim() || '';
+            const numeroTarjeta = (document.getElementById('numeroTarjeta')?.value || '').trim();
+            const cvv = (document.getElementById('cvv')?.value || '').trim();
+            const fechaVencimiento = (document.getElementById('fechaVencimiento')?.value || '').trim();
+
+            const tarjetaLimpia = numeroTarjeta.replace(/[\s-]/g, '');
+
+            // Regla de simulación de fondos insuficientes (Flujo Alternativo 422 - RN-04)
+            // Se activa si la tarjeta termina en 0000 o el CVC/CVV es 000, 0000, 999, 0, 00
+            const esRechazoSimulado = metodoPago === 'tarjeta' && (
+                tarjetaLimpia.endsWith('0000') ||
+                cvv === '000' ||
+                cvv === '0000' ||
+                cvv === '999' ||
+                cvv === '00' ||
+                cvv === '0'
+            );
 
             const planEnumMap = {
                 mensual: 'Mensual',
@@ -363,6 +433,35 @@ function initFacturacion() {
                 cvv: cvv,
                 fechaVencimiento: fechaVencimiento
             };
+
+            if (esRechazoSimulado) {
+                // Notificar al backend si está activo para registrar auditoría y evento de rechazo en consola
+                try {
+                    await fetch(`${API_BASE_URL}/suscripciones`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (e) {
+                    // Si el backend no está corriendo, la simulación opera autónomamente
+                }
+
+                // SIEMPRE mostrar la alerta roja 422 de pago declinado en pantalla y NUNCA activar la compra
+                if (alerta) {
+                    alerta.className = 'alerta-mensaje';
+                    alerta.style.display = 'block';
+                    alerta.style.background = '#fef2f2';
+                    alerta.style.color = '#991b1b';
+                    alerta.style.border = '1px solid #f87171';
+                    alerta.innerHTML = `<strong>⚠️ Flujo Alternativo 422 — Transacción Declinada por Entidad Bancaria:</strong> Fondos insuficientes o tarjeta no autorizada (CVC <strong>${cvv || '000'}</strong>).<br><small style="margin-top:6px;display:block;">Conforme a la regla de negocio <strong>RN-04</strong>, la suscripción no fue activada.</small>`;
+                    alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = textoOriginal;
+                }
+                return;
+            }
 
             try {
                 const response = await fetch(`${API_BASE_URL}/suscripciones`, {
@@ -422,8 +521,9 @@ function initFacturacion() {
                     alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             } catch (error) {
-                // Modo resiliente offline si el backend no está corriendo en localhost:5000
-                console.warn('Backend offline, ejecutando guardado local de respaldo.', error);
+                console.warn('Backend offline o no disponible en http://localhost:5000.', error);
+
+                // Si los datos son válidos, proceder con el Happy Path local de respaldo
                 guardarSuscripcion({
                     id: Date.now(),
                     slug: CATALOGO[slug] ? slug : 'gamer-ultimate',
@@ -458,6 +558,25 @@ function initBannerExito() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('nueva') === '1') {
         banner.classList.remove('hidden');
+        banner.style.display = 'block';
+        window.history.replaceState({}, '', 'cajas.html');
+    }
+}
+
+function initBannerCancelacionInicio() {
+    const banner = document.getElementById('inicioCancelBanner');
+    if (!banner) {
+        return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('cancelada') === '1') {
+        const nombreCaja = params.get('caja') ? decodeURIComponent(params.get('caja')) : 'la suscripción';
+        banner.classList.remove('hidden');
+        banner.style.display = 'block';
+        banner.innerHTML = `⚠️ <strong>Flujo Alternativo del Ciclo de Vida:</strong> Has cancelado tu suscripción a <strong>${nombreCaja}</strong>. Ha dejado de estar en <em>Mis cajas</em> y vuelve a estar disponible aquí en el catálogo general.`;
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        window.history.replaceState({}, '', 'inicio.html');
     }
 }
 
@@ -513,13 +632,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = card.dataset.description || 'Sin descripción disponible.';
         const price = card.dataset.price || 'Precio no disponible';
         const image = card.querySelector('img')?.src || '';
+        const isInactive = card.dataset.status === 'inactive';
 
         modalTitle.textContent = title;
         modalDescription.textContent = description;
         modalPrice.textContent = price;
         modalImage.src = image;
         modalImage.alt = title;
-        modal.dataset.subscriptionId = card.dataset.id || '';
+
+        const subId = card.dataset.id || card.dataset.title || 'SUB-001';
+        modal.dataset.subscriptionId = subId;
+        modal._activeCard = card;
+
+        if (cancelBtn) {
+            if (isInactive) {
+                cancelBtn.disabled = true;
+                cancelBtn.textContent = 'Suscripción ya cancelada (Inactiva)';
+                cancelBtn.style.background = '#94a3b8';
+                cancelBtn.style.cursor = 'not-allowed';
+            } else {
+                cancelBtn.disabled = false;
+                cancelBtn.textContent = 'Cancelar suscripción';
+                cancelBtn.style.background = '#ef4444';
+                cancelBtn.style.cursor = 'pointer';
+            }
+        }
+
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
     };
@@ -527,46 +665,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelBtn = modal?.querySelector('.cancel-btn');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', async () => {
-            const subId = modal.dataset.subscriptionId;
-            if (!subId) {
-                closeModal();
-                return;
-            }
+            const subId = modal.dataset.subscriptionId || 'SUB-001';
+            const targetCard = modal._activeCard || document.querySelector(`.subscription-card[data-id="${subId}"]`);
+            const nombreCaja = targetCard?.dataset.title || modalTitle?.textContent || 'la suscripción';
 
-            if (!confirm(`¿Estás seguro de que deseas cancelar la suscripción ${subId}? (Flujo alternativo)`)) {
-                return;
-            }
+            cancelBtn.disabled = true;
+            cancelBtn.textContent = 'Cancelando en el sistema...';
 
+            // 1. Notificar al backend si está disponible (Flujo Alternativo del Backend - RF-13)
             try {
                 await fetch(`${API_BASE_URL}/suscripciones/${encodeURIComponent(subId)}/cancelar`, {
                     method: 'POST'
                 });
             } catch (err) {
-                console.warn('Backend offline, cancelando suscripción en modo local.', err);
+                console.warn('Backend offline o no disponible, ejecutando cancelación en modo cliente.', err);
             }
 
-            // Actualizar tarjeta en el DOM
-            const targetCard = document.querySelector(`.subscription-card[data-id="${subId}"]`);
-            if (targetCard) {
-                targetCard.dataset.status = 'inactive';
-                const statusBadge = targetCard.querySelector('.status');
-                if (statusBadge) {
-                    statusBadge.className = 'status inactive';
-                    statusBadge.textContent = 'Cancelada';
-                }
-            }
-
-            // Actualizar en localStorage
+            // 2. Eliminar de las suscripciones guardadas dinámicas en localStorage
             const guardadas = obtenerSuscripcionesGuardadas();
-            const idx = guardadas.findIndex(s => String(s.id) === String(subId));
-            if (idx >= 0) {
-                guardadas[idx].estado = 'inactive';
-                localStorage.setItem(ALMACEN_SUSCRIPCIONES, JSON.stringify(guardadas));
+            const actualizadas = guardadas.filter(s => String(s.id) !== String(subId) && s.nombre !== nombreCaja);
+            localStorage.setItem(ALMACEN_SUSCRIPCIONES, JSON.stringify(actualizadas));
+
+            // 3. Registrar en lista de canceladas para que tampoco reaparezca si era una tarjeta estática
+            registrarCancelada(subId);
+            registrarCancelada(nombreCaja);
+
+            // 4. Remover la tarjeta del DOM de "Mis cajas"
+            if (targetCard) {
+                targetCard.remove();
             }
 
+            // 5. Ocultar banner de éxito para evitar cualquier solapamiento
+            const exitoBanner = document.getElementById('exitoBanner');
+            if (exitoBanner) {
+                exitoBanner.style.display = 'none';
+                exitoBanner.classList.add('hidden');
+            }
+
+            // 6. Actualizar contadores de las píldoras de filtro (Todas, Activas, etc.)
             updateSubscriptionFilterCounts();
+
+            // 7. Cerrar el modal
             closeModal();
-            alert(`Suscripción ${subId} cancelada exitosamente en el sistema.`);
+
+            // 8. Transportar / redirigir inmediatamente al catálogo en inicio.html con el mensaje de confirmación
+            window.location.href = `inicio.html?cancelada=1&caja=${encodeURIComponent(nombreCaja)}`;
         });
     }
 
@@ -622,6 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applySubscriptionFilter('all');
 
     initBannerExito();
+    initBannerCancelacionInicio();
 
     if (document.body.classList.contains('pagina-detalle')) {
         initDetalleCaja();

@@ -1626,6 +1626,22 @@ body.app-shell {
     display: none;
 }
 
+/* Banner de cancelación (Flujo alternativo del ciclo de vida) */
+.cancel-banner {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #f87171;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.12);
+}
+
+.cancel-banner.hidden {
+    display: none;
+}
+
 /* ==========================================
    RESPONSIVE PARA PÁGINAS CON .app-shell
    ========================================== */

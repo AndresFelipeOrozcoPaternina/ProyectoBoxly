@@ -47,8 +47,8 @@ Abre directamente `front/inicio.html` en tu navegador o ejecuta Live Server sobr
 2. **`front/detalle.html`** — Detalle de la caja, inclusión de ítems y selector de periodicidad (Mensual, Semestral -10%, Anual -20%).
 3. **`front/facturacion.html`** — Formulario de envío, método de pago y pre-factura en tiempo real (Plan + Envío = Total).
    * *Happy Path:* Deja la tarjeta de prueba predeterminada y haz clic en "Confirmar pre-factura" ➔ La suscripción se activa con HTTP 201 (**RN-04**).
-   * *Flujo Alternativo:* Ingresa una tarjeta terminada en **0000** o CVV **999** ➔ El backend responde con HTTP 422 (Unprocessable Entity) y la interfaz muestra la alerta bancaria de fondos insuficientes sin activar la suscripción (**RN-04**).
-4. **`front/cajas.html`** — Panel "Mis cajas" con filtros por estado (*Activa*, *Próxima*, *Cancelada*). Incluye modal con botón para **Cancelar suscripción** (Flujo alternativo de ciclo de vida).
+   * *Flujo Alternativo:* Ingresa CVV **000** (o **999** o tarjeta terminada en **0000**) ➔ Se detiene la activación, responde con HTTP 422 (Unprocessable Entity) y la interfaz muestra la alerta bancaria de fondos insuficientes (**RN-04**).
+4. **`front/cajas.html`** — Panel "Mis cajas" con filtros por estado (*Activa*, *Próxima*, *Cancelada*). Incluye modal con botón para **Cancelar suscripción** (Flujo alternativo de ciclo de vida), el cual retira la suscripción de la lista y transporta de inmediato al usuario al catálogo en `inicio.html` con mensaje confirmatorio.
 5. **`front/configuracion.html`** — Gestión de perfil, preferencias e intereses, métricas y cierre de sesión.
 
 ---

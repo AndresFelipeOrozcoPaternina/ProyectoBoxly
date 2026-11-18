@@ -12,21 +12,18 @@ Por tanto, el Entregable No.3 debe demostrar que el sistema avanza hacia una sol
 
 # **0. Portada** 
 
-- Nombre del proyecto 
-
-- Integrantes 
-
-- Docente 
-
-- Curso 
-
-- Fecha 
-
-- Institución 
-
-- 
-
-- Enlace al repositorio Git 
+- **Nombre del proyecto:** Boxly — Plataforma SaaS de Suscripción a Cajas Temáticas
+- **Integrantes:** 
+  - Andrés Felipe Orozco Paternina
+  - Jose Manuel Pulgarin Rueda
+  - Juan David Restrepo Alvarez
+  - Jesús David Ávila Arrieta
+- **Docente:** Alexandra Guerrero Bocanegra 
+- **Curso:** Diseño de Sistemas de Información 
+- **Fecha:** 17 de noviembre de 2026 
+- **Institución:** Instituto Tecnológico Metropolitano (ITM) 
+- **Enlace al repositorio Git:** [https://github.com/AndresFelipeOrozcoPaternina/ProyectoBoxly](https://github.com/AndresFelipeOrozcoPaternina/ProyectoBoxly)  
+  *(Rama principal: `main` | Rama de trabajo MVP/Backend: `rama-jose`)* 
 
 # 1. Refinamiento y consolidación de los entregables 1 y 2
 
@@ -254,7 +251,7 @@ El MVP demuestra operatividad tanto en el camino feliz como ante entradas invál
 | **FA-01** | **Alternativo (Validación)** | Datos de envío incompletos o correo con formato inválido. | `400 Bad Request` | Detiene la operación, no crea la suscripción y retorna lista detallada de errores de validación. |
 | **FA-02** | **Alternativo (Inexistente)** | Petición de cotización o compra sobre un slug de caja inexistente. | `404 Not Found` | Retorna mensaje explicativo informando que la caja temática solicitada no existe en el catálogo. |
 | **FA-03** | **Alternativo (Stock)** | Intento de suscripción sobre una caja con existencias en cero. | `409 Conflict` | Bloquea la contratación indicando falta de existencias disponibles para la caja seleccionada. |
-| **FA-04** | **Alternativo (Pago Rechazado)** | Tarjeta terminada en `0000` o CVV `999` (simulación bancaria de fondos insuficientes). | `422 Unprocessable` | La pasarela declina la transacción. La suscripción se registra pero **no se activa**, quedando en estado `PagoRechazado` (**RN-04**). El frontend alerta al usuario en pantalla. |
+| **FA-04** | **Alternativo (Pago Rechazado)** | Tarjeta terminada en `0000` o CVV `000` / `999` (simulación bancaria de fondos insuficientes). | `422 Unprocessable` | La pasarela declina la transacción. La suscripción se registra pero **no se activa**, quedando en estado `PagoRechazado` (**RN-04**). El frontend alerta al usuario en pantalla y bloquea la activación. |
 | **FA-05** | **Alternativo (Cancelación)** | Usuario solicita cancelar una suscripción activa desde el panel. | `200 OK` | Cambia estado a `Cancelada`, notifica vía Observer y actualiza el contador de suscripciones. Si se reintenta, responde `400 Bad Request` por idempotencia. |
 
 ### 5.5 Instrucciones para Ejecutar y Demostrar el MVP
@@ -293,7 +290,7 @@ A continuación se registra el cumplimiento del requisito de commits significati
 
 | Integrante | Rama de Trabajo | N° Commits | Principales Contribuciones Técnicas en el Entregable No. 3 |
 |---|---|:---:|---|
-| **Jose Manuel Pulgarin Rueda** | `rama-jose` | 6 | • Reestructuración modular del repositorio y corrección de rutas relativas.<br>• Creación de la solución ASP.NET Core Web API y modelos de dominio.<br>• Implementación de patrones GoF (*Factory Method*, *Builder*, *Strategy*, *Observer*, *Facade*) y principios SOLID.<br>• Implementación de controladores REST con manejo de flujos alternativos (400, 404, 409, 422).<br>• Integración frontend <-> backend en JavaScript con manejo de errores en pantalla.<br>• Documentación técnica completa en README.md y Entregable 3. |
+| **Jose Manuel Pulgarin Rueda** | `rama-jose` | 8+ | • Reestructuración modular del repositorio y corrección de rutas relativas.<br>• Creación de la solución ASP.NET Core Web API y modelos de dominio.<br>• Implementación de patrones GoF (*Factory Method*, *Builder*, *Strategy*, *Observer*, *Facade*) y principios SOLID.<br>• Implementación de controladores REST con manejo de flujos alternativos (400, 404, 409, 422).<br>• Integración frontend <-> backend en JavaScript con manejo de errores en pantalla.<br>• Refinamiento UX en frontend: ciclo de vida de cancelación con retiro de la caja y transporte inmediato al catálogo en inicio; validación estricta de rechazo bancario 422 con CVC 000.<br>• Documentación técnica completa en README.md y Entregable 3. |
 | **Andrés Felipe Orozco Paternina** | `feature/estados-refinamiento` | 5 | • Diligenciamiento de la Sección 1 (Tabla de consolidación y refinamiento E1/E2).<br>• Matriz de análisis de la máquina de estados UML.<br>• Elaboración del diagrama editable `.drawio` de la máquina de estados.<br>• Exportación y vinculación del diagrama vectorial.<br>• Justificación técnica de transiciones y correspondencia con reglas de negocio. |
 | **Juan David Restrepo Alvarez** / **Jesús David Ávila Arrieta** | `feature/componentes-secuencia` | 5 | • Diseño de diagramas UML de Componentes y Despliegue en `.drawio`.<br>• Redacción de la justificación arquitectónica y correspondencia con el modelo C4.<br>• Elaboración de secuencias para RU-01 (catálogo local) y RU-03 (contratación), con fragmentos `alt`/`loop`.<br>• Documentación de las interacciones reales entre frontend, API, servicio, fachada, fábrica, repositorios en memoria y observadores.<br>• Vinculación de imágenes y fuentes editables de los diagramas en el Entregable 3. |
 

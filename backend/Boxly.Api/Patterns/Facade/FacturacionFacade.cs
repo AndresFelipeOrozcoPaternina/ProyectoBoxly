@@ -61,9 +61,10 @@ public class FacturacionFacade : IFacturacionFacade
         if (metodo == "tarjeta")
         {
             var tarjeta = (dto.NumeroTarjeta ?? "").Replace(" ", "").Replace("-", "");
+            var cvv = (dto.Cvv ?? "").Trim();
 
-            // Flujo Alternativo: Tarjeta terminada en 0000 o CVV 999 simula fondos insuficientes
-            if (tarjeta.EndsWith("0000") || dto.Cvv == "999")
+            // Flujo Alternativo: Tarjeta terminada en 0000 o CVV 000 / 0000 / 999 simula fondos insuficientes (RN-04)
+            if (tarjeta.EndsWith("0000") || cvv == "000" || cvv == "0000" || cvv == "999")
             {
                 _logger.LogWarning("Pago RECHAZADO: fondos insuficientes o tarjeta declinada para la suscripción {Id}", suscripcion.Id);
                 return new ResultadoPago(false, string.Empty, "La entidad bancaria rechazó la transacción por fondos insuficientes o tarjeta no autorizada.");

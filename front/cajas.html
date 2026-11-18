@@ -59,6 +59,10 @@
                 ✅ ¡Suscripción confirmada! Tu pre-factura fue generada y la caja aparece como activa.
             </div>
 
+            <div class="cancel-banner hidden" id="cancelBanner">
+                ⚠️ Suscripción cancelada exitosamente (Flujo alternativo del ciclo de vida).
+            </div>
+
             <section class="filter-bar" aria-label="Filtros de suscripciones">
                 <button class="filter-pill active" data-status="all" onclick="window.applySubscriptionFilter('all')">Todas <span>(6)</span></button>
                 <button class="filter-pill" data-status="active" onclick="window.applySubscriptionFilter('active')">Activas <span>(3)</span></button>
@@ -67,7 +71,7 @@
             </section>
 
             <section class="cards-grid subscriptions-grid">
-                <article class="card subscription-card" data-status="active" data-title="Cuidado personal" data-description="Incluye productos de higiene, cuidado personal y bienestar para mantener una rutina completa cada mes con artículos premium y útiles de uso diario." data-price="120.000 COP / mes">
+                <article class="card subscription-card" data-id="SUB-001" data-status="active" data-title="Cuidado personal" data-description="Incluye productos de higiene, cuidado personal y bienestar para mantener una rutina completa cada mes con artículos premium y útiles de uso diario." data-price="120.000 COP / mes">
                     <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
                     <div class="card-image-container">
                         <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" alt="Cuidado personal" class="card-img">
@@ -82,7 +86,7 @@
                     </div>
                 </article>
 
-                <article class="card subscription-card" data-status="active" data-title="Videojuegos" data-description="Box de entretenimiento con acceso a productos del universo gamer, accesorios, merchandising y artículos que te ayudarán a vivir la experiencia completa de cada lanzamiento." data-price="135.000 COP / mes">
+                <article class="card subscription-card" data-id="SUB-002" data-status="active" data-title="Videojuegos" data-description="Box de entretenimiento con acceso a productos del universo gamer, accesorios, merchandising y artículos que te ayudarán a vivir la experiencia completa de cada lanzamiento." data-price="135.000 COP / mes">
                     <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
                     <div class="card-image-container">
                         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" alt="Videojuegos" class="card-img">
@@ -97,7 +101,7 @@
                     </div>
                 </article>
 
-                <article class="card subscription-card" data-status="upcoming" data-title="Implementos gym" data-description="Kit mensual con accesorios deportivos, resistencia y elementos para entrenar en casa o en el gimnasio con mayor comodidad, seguridad y variedad." data-price="150.000 COP / mes">
+                <article class="card subscription-card" data-id="SUB-003" data-status="upcoming" data-title="Implementos gym" data-description="Kit mensual con accesorios deportivos, resistencia y elementos para entrenar en casa o en el gimnasio con mayor comodidad, seguridad y variedad." data-price="150.000 COP / mes">
                     <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
                     <div class="card-image-container">
                         <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Implementos gym" class="card-img">
@@ -112,7 +116,7 @@
                     </div>
                 </article>
 
-                <article class="card subscription-card" data-status="inactive" data-title="Herramientas" data-description="Incluye herramientas, accesorios y elementos de trabajo para proyectos del hogar, mantenimiento y tareas del día a día con calidad y utilidad constante." data-price="110.000 COP / mes">
+                <article class="card subscription-card" data-id="SUB-004" data-status="inactive" data-title="Herramientas" data-description="Incluye herramientas, accesorios y elementos de trabajo para proyectos del hogar, mantenimiento y tareas del día a día con calidad y utilidad constante." data-price="110.000 COP / mes">
                     <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
                     <div class="card-image-container">
                         <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=80" alt="Herramientas" class="card-img">
@@ -127,7 +131,7 @@
                     </div>
                 </article>
 
-                <article class="card subscription-card" data-status="active" data-title="Tecnología" data-description="Suscripción con gadgets, accesorios y productos tecnológicos para potenciar tu espacio digital y mantenerte al día con cada lanzamiento del mundo tech." data-price="200.000 COP / mes">
+                <article class="card subscription-card" data-id="SUB-005" data-status="active" data-title="Tecnología" data-description="Suscripción con gadgets, accesorios y productos tecnológicos para potenciar tu espacio digital y mantenerte al día con cada lanzamiento del mundo tech." data-price="200.000 COP / mes">
                     <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
                     <div class="card-image-container">
                         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" alt="Tecnología" class="card-img">
@@ -142,7 +146,7 @@
                     </div>
                 </article>
 
-                <article class="card subscription-card" data-status="upcoming" data-title="Bienestar y spa" data-description="Caja de relajación con esenciales de spa, productos de autocuidado y artículos para mejorar tu bienestar y rutina de descanso." data-price="130.000 COP / mes">
+                <article class="card subscription-card" data-id="SUB-006" data-status="upcoming" data-title="Bienestar y spa" data-description="Caja de relajación con esenciales de spa, productos de autocuidado y artículos para mejorar tu bienestar y rutina de descanso." data-price="130.000 COP / mes">
                     <button class="favorite-btn" type="button" aria-label="Agregar a favoritos">♡</button>
                     <div class="card-image-container">
                         <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80" alt="Bienestar y spa" class="card-img">
